@@ -9,7 +9,7 @@ import tgo1014.yoyocinema.data.network.services.MoviesService
 
 object RestClient {
 
-    private val moviesService: MoviesService
+    val moviesService: MoviesService
 
     init {
 
