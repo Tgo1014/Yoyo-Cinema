@@ -1,7 +1,7 @@
 package tgo1014.yoyocinema.data.repositories.daos
 
-import androidx.lifecycle.LiveData
-import androidx.room.*
+import android.arch.lifecycle.LiveData
+import android.arch.persistence.room.*
 import tgo1014.yoyocinema.data.base.BaseRepository
 import tgo1014.yoyocinema.data.entities.Movie
 
@@ -13,6 +13,9 @@ interface MoviesDao : BaseRepository<Movie> {
 
     @Query("SELECT * FROM Movie")
     override fun getAll(): LiveData<List<Movie>>
+
+    @Query("SELECT * FROM Movie WHERE :id = id")
+    fun getById(id: Int) : LiveData<Movie>
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     override fun update(vararg item: Movie)

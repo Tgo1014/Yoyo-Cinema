@@ -1,12 +1,14 @@
 package tgo1014.yoyocinema.data.adapters
 
+import android.support.v7.util.DiffUtil
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
+
+
 import tgo1014.yoyocinema.Constants
 import tgo1014.yoyocinema.R
 import tgo1014.yoyocinema.data.network.requests.SearchRequest
@@ -24,8 +26,9 @@ class MovieAdapter(var movieList: MutableList<SearchRequest.Result>,
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val item = movieList[holder.adapterPosition]
         holder.name.text = item.title
-        holder.poster.loadUrl(Constants.BASE_IMG_URL + Constants.POSTER_SIZE_342 + item.posterPath)
-        holder.background.loadUrl(Constants.BASE_IMG_URL + Constants.BACKDROP_SIZE_300 + item.backdropPath)
+        holder.poster.loadUrl(Constants.BASE_IMG_URL + Constants.POSTER_SIZE_342 + item.posterPath, R.drawable.ic_poster_placeholder)
+        holder.background.loadUrl(Constants.BASE_IMG_URL + Constants.BACKDROP_SIZE_300 + item.backdropPath, R.drawable.ic_movie_background_placeholder)
+        holder.itemView.setOnClickListener { listener.onClick(movieList[holder.adapterPosition]) }
     }
 
     fun updateList(list: List<SearchRequest.Result>) {
@@ -43,6 +46,5 @@ class MovieAdapter(var movieList: MutableList<SearchRequest.Result>,
         val name: TextView = itemView.findViewById(R.id.itemMovieTxtTitle)
         val poster: ImageView = itemView.findViewById(R.id.itemMovieIvPoster)
         val background: ImageView = itemView.findViewById(R.id.itemMovieIvBackground)
-
     }
 }

@@ -1,12 +1,16 @@
 package tgo1014.yoyocinema.helpers.extensions
 
+import android.arch.lifecycle.ViewModel
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
+import android.support.annotation.DrawableRes
+import android.support.v7.app.AppCompatActivity
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
+import android.widget.Toast
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import com.squareup.picasso.Picasso
 
@@ -15,7 +19,7 @@ fun <T> T.toJson(): String {
 }
 
 fun <T> String.fromJson(): T {
-    return Gson().fromJson<T>(this, object : TypeToken<T>() {}.type)
+    return GsonBuilder().create().fromJson<T>(this, object : TypeToken<T>() {}.type)
 }
 
 inline fun <reified T : ViewModel> AppCompatActivity.getViewModel(crossinline factory: () -> T): T {
@@ -28,8 +32,19 @@ inline fun <reified T : ViewModel> AppCompatActivity.getViewModel(crossinline fa
 
 fun TextView.toStr() = this.text.toString()
 
-fun ImageView.loadUrl(url: String?) {
+fun ImageView.loadUrl(url: String?, @DrawableRes placeholder: Int? = null) {
+    if (placeholder == null) {
+        Picasso.with(context)
+                .load(url)
+                .into(this)
+        return
+    }
     Picasso.with(context)
             .load(url)
+            .placeholder(placeholder)
             .into(this)
+}
+
+fun Context.toast(message: String, length: Int = Toast.LENGTH_SHORT) {
+    Toast.makeText(this, message, length).show()
 }

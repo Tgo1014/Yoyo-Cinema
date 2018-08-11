@@ -15,8 +15,8 @@
  */
 package tgo1014.yoyocinema.data.network
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MediatorLiveData
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.runBlocking
 import retrofit2.Call

@@ -1,0 +1,193 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/detail_activity_scrollview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="?attr/actionBarSize">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/detailActivityIvHeader"
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:foreground="@drawable/bg_black_gradient"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_movie_placeholder"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/detailActivityIvPoster"
+            android:layout_width="0dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/ic_movie_placeholder"
+            app:layout_constraintBottom_toBottomOf="@+id/detailActivityIvHeader"
+            app:layout_constraintDimensionRatio="w,2:3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/detailActivityIvHeader" />
+
+        <TextView
+            android:id="@+id/detailActivityTvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:textAppearance="@android:style/TextAppearance.Material.Title"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/detailActivityIvHeader"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/detailActivityIvPoster"
+            tools:text="@tools:sample/lorem" />
+
+        <TextView
+            android:id="@+id/detailActivityTagline"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:textAppearance="@android:style/TextAppearance.Material.SearchResult.Subtitle"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/detailActivityIvPoster"
+            app:layout_constraintTop_toBottomOf="@+id/detailActivityIvHeader"
+            tools:text="@tools:sample/lorem" />
+
+        <TextView
+            android:id="@+id/detailActivityTVOverview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/str_overview"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/detailActivityIvPoster" />
+
+        <TextView
+            android:id="@+id/detailActivityTvOverviewContent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/detailActivityTVOverview"
+            tools:text="@tools:sample/lorem/random" />
+
+        <TextView
+            android:id="@+id/detailActivityTvInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/str_infos"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/detailActivityTvOverviewContent" />
+
+        <TextView
+            android:id="@+id/detailActivityTvHomepage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/str_homepage"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/detailActivityTvInfo" />
+
+        <TextView
+            android:id="@+id/detailActivityTvHomepageContent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/detail_activity_barrier"
+            app:layout_constraintTop_toTopOf="@+id/detailActivityTvHomepage"
+            tools:text="@tools:sample/lorem" />
+
+        <TextView
+            android:id="@+id/detailActivityTvReleaseDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/str_release_date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/detailActivityTvHomepageContent" />
+
+
+        <TextView
+            android:id="@+id/detailActivityTvReleaseDateContent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/detail_activity_barrier"
+            app:layout_constraintTop_toTopOf="@+id/detailActivityTvReleaseDate"
+            tools:text="@tools:sample/date/mmddyy" />
+
+        <TextView
+            android:id="@+id/detailActivityTvStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/str_status"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/detailActivityTvReleaseDateContent" />
+
+        <TextView
+            android:id="@+id/detailActivityTvStatusContent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/detail_activity_barrier"
+            app:layout_constraintTop_toTopOf="@+id/detailActivityTvStatus"
+            tools:text="@tools:sample/lorem" />
+
+        <android.support.constraint.Barrier
+            android:id="@+id/detail_activity_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="right"
+            app:constraint_referenced_ids="detailActivityTvHomepage,detailActivityTvReleaseDate"
+            tools:ignore="MissingConstraints" />
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/detailActivityIvPoster"
+            app:layout_constraintEnd_toEndOf="@id/detailActivityIvPoster"
+            app:layout_constraintStart_toStartOf="@id/detailActivityIvPoster"
+            app:layout_constraintTop_toTopOf="@id/detailActivityIvPoster" />
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

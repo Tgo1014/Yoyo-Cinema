@@ -1,11 +1,11 @@
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="160dp"
     app:cardUseCompatPadding="true">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -15,23 +15,25 @@
             android:layout_height="match_parent"
             android:foreground="@drawable/bg_black_gradient"
             android:scaleType="centerCrop"
+            android:src="@drawable/ic_movie_background_placeholder"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:background="@tools:sample/backgrounds/scenic" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/itemMovieIvPoster"
             android:layout_width="0dp"
-            android:layout_height="100dp"
-            android:layout_marginStart="8dp"
+            android:layout_height="match_parent"
             android:layout_marginBottom="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:scaleType="centerCrop"
+            android:src="@drawable/ic_poster_placeholder"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="H,6:4"
+            app:layout_constraintDimensionRatio="2:3"
             app:layout_constraintStart_toStartOf="parent"
-            tools:src="@tools:sample/avatars" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             style="@style/Widget.MaterialComponents.Button"
@@ -47,16 +49,16 @@
             android:id="@+id/itemMovieTxtTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:textAppearance="@android:style/TextAppearance.Material.Title"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/itemMovieIvPoster"
             tools:text="That's a really long text just to test the title maximum size" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
 
 
-</com.google.android.material.card.MaterialCardView>
+</android.support.v7.widget.CardView>

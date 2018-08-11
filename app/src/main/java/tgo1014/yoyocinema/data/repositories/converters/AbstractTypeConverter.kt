@@ -1,6 +1,6 @@
 package tgo1014.yoyocinema.data.repositories.converters
 
-import androidx.room.TypeConverter
+import android.arch.persistence.room.TypeConverter
 import tgo1014.yoyocinema.helpers.extensions.fromJson
 import tgo1014.yoyocinema.helpers.extensions.toJson
 

@@ -1,12 +1,14 @@
 package tgo1014.yoyocinema.data.repositories
 
-import androidx.lifecycle.LiveData
+import android.arch.lifecycle.LiveData
 import kotlinx.coroutines.experimental.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import tgo1014.yoyocinema.data.base.BaseRepository
 import tgo1014.yoyocinema.data.entities.Movie
+import tgo1014.yoyocinema.data.network.NetworkBoundResource
+import tgo1014.yoyocinema.data.network.Resource
 import tgo1014.yoyocinema.data.network.RestClient
 import tgo1014.yoyocinema.data.network.ResultListener
 import tgo1014.yoyocinema.data.network.requests.SearchRequest
@@ -46,5 +48,14 @@ class MoviesRepository(val dao: MoviesDao) : BaseRepository<Movie> {
                 listener.onFailure("Unable to get results")
             }
         })
+    }
+
+    fun getMovie(movieId: Int): LiveData<Resource<Movie>> {
+        return object : NetworkBoundResource<Movie, Movie>() {
+            override fun saveCallResult(item: Movie) = add(item)
+            override fun loadFromDb(): LiveData<Movie> = dao.getById(movieId)
+            override fun createCall(): Call<Movie> = RestClient.moviesService.getMovieDetails(movieId)
+            override fun shouldFetch(data: Movie?) = (data == null)
+        }.asLiveData()
     }
 }

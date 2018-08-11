@@ -1,6 +1,6 @@
 package tgo1014.yoyocinema.data.repositories.converters
 
-import androidx.room.TypeConverter
+import android.arch.persistence.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import tgo1014.yoyocinema.data.entities.Movie

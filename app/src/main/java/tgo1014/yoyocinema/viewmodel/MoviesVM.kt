@@ -1,7 +1,7 @@
 package tgo1014.yoyocinema.viewmodel
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.ViewModel
 import tgo1014.yoyocinema.data.network.ResultListener
 import tgo1014.yoyocinema.data.network.requests.SearchRequest
 import tgo1014.yoyocinema.data.repositories.MoviesRepository
@@ -24,19 +24,22 @@ class MoviesVM(moviesDao: MoviesDao) : ViewModel() {
                 val movies = observableSearchList.value ?: arrayListOf()
                 movies.addAll(data)
                 observableSearchList.value = movies
+                isLoading = false
             }
 
             override fun onFailure(message: String) {
-
+                isLoading = false
             }
         })
     }
 
+    fun getMovie(movieId: Int) = repository.getMovie(movieId)
+
     fun loadNextPage() {
         if (!isLoading && !lastPageReached) {
             page++
+            isLoading = true
             search(lastSearchTerm)
         }
     }
-
 }

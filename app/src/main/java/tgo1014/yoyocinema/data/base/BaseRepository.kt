@@ -1,6 +1,6 @@
 package tgo1014.yoyocinema.data.base
 
-import androidx.lifecycle.LiveData
+import android.arch.lifecycle.LiveData
 
 interface BaseRepository<T> {
     fun add(vararg item: T)
