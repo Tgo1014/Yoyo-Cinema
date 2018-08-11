@@ -1,6 +1,6 @@
 package tgo1014.yoyocinema.viewmodel
 
-import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import tgo1014.yoyocinema.data.network.ResultListener
 import tgo1014.yoyocinema.data.network.requests.SearchRequest
@@ -15,14 +15,14 @@ class MoviesVM(moviesDao: MoviesDao) : ViewModel() {
     private var lastPageReached = false
     private lateinit var lastSearchTerm: String
 
-    val observableSearchList = MediatorLiveData<MutableList<SearchRequest.Result>>()
+    val observableSearchList = MutableLiveData<MutableList<SearchRequest.Result>>()
 
     fun search(searchTerm: String) {
         lastSearchTerm = searchTerm
         repository.search(searchTerm, page, object : ResultListener<List<SearchRequest.Result>> {
             override fun onSucess(data: List<SearchRequest.Result>) {
-                val movies = observableSearchList.value
-                movies?.addAll(data)
+                val movies = observableSearchList.value ?: arrayListOf()
+                movies.addAll(data)
                 observableSearchList.value = movies
             }
 

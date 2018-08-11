@@ -14,7 +14,7 @@ data class SearchRequest(
             @SerializedName("vote_count") val voteCount: Int?,
             @SerializedName("id") val id: Int?,
             @SerializedName("video") val video: Boolean?,
-            @SerializedName("vote_average") val voteAverage: Int?,
+            @SerializedName("vote_average") val voteAverage: Double?,
             @SerializedName("title") val title: String?,
             @SerializedName("popularity") val popularity: Double?,
             @SerializedName("poster_path") val posterPath: String?,

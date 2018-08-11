@@ -12,6 +12,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         all {
@@ -25,10 +26,12 @@ android {
     }
 }
 
+
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.0.0-rc01'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
     implementation 'com.google.android.material:material:1.0.0-rc01'
@@ -38,12 +41,12 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
 
     //Room
-    implementation 'androidx.room:room-runtime:2.0.0-beta01'
-    kapt 'androidx.room:room-compiler:2.0.0-beta01'
+    implementation 'androidx.room:room-runtime:2.0.0-rc01'
+    kapt 'androidx.room:room-compiler:2.0.0-rc01'
 
     // ViewModel and LiveData
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0-beta01'
-    kapt 'androidx.lifecycle:lifecycle-compiler:2.0.0-beta01'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0-rc01'
+    kapt 'androidx.lifecycle:lifecycle-compiler:2.0.0-rc01'
 
     //Gson
     implementation 'com.google.code.gson:gson:2.8.5'
@@ -56,9 +59,10 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
 
+    //Picasso
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.github.bumptech.glide:glide:4.8.0-SNAPSHOT'
+
+
 }
-kotlin {
-    experimental {
-        coroutines "enable"
-    }
-}
+

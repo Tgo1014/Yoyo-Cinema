@@ -9,8 +9,8 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
         android:layout_marginStart="8dp"
         android:hint="Search a movie"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -24,14 +24,14 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/mainEdtSearch"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             tools:text="@tools:sample/lorem" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageButton
         android:id="@+id/mainBtnSearch"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginEnd="8dp"
         android:backgroundTint="@color/colorAccent"
         android:src="@drawable/ic_search"
@@ -45,12 +45,14 @@
         android:id="@+id/mainRecyclerMovies"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="58dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/item_movie"
+        tools:visibility="visible" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"

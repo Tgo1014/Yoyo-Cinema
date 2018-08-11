@@ -1,0 +1,62 @@
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="160dp"
+    app:cardUseCompatPadding="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/itemMovieIvBackground"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:foreground="@drawable/bg_black_gradient"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:background="@tools:sample/backgrounds/scenic" />
+
+        <ImageView
+            android:id="@+id/itemMovieIvPoster"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="H,6:4"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:src="@tools:sample/avatars" />
+
+        <ImageButton
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:backgroundTint="@android:color/darker_gray"
+            android:src="@drawable/ic_favorite"
+            android:tint="@color/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/itemMovieTxtTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:textAppearance="@android:style/TextAppearance.Material.Title"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/itemMovieIvPoster"
+            tools:text="That's a really long text just to test the title maximum size" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</com.google.android.material.card.MaterialCardView>
