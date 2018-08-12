@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.KeyEvent
-import android.view.View
 import android.view.inputmethod.EditorInfo
 import kotlinx.android.synthetic.main.activity_main.*
 import tgo1014.yoyocinema.R
@@ -14,6 +13,7 @@ import tgo1014.yoyocinema.data.adapters.OnItemClickListener
 import tgo1014.yoyocinema.data.adapters.SearchRequestAdapter
 import tgo1014.yoyocinema.data.network.requests.SearchRequest
 import tgo1014.yoyocinema.helpers.EndlessRecyclerViewScrollListener
+import tgo1014.yoyocinema.helpers.extensions.show
 import tgo1014.yoyocinema.helpers.extensions.toStr
 
 class MainActivity : BaseMovieActivity(), OnItemClickListener<SearchRequest.Result> {
@@ -44,6 +44,7 @@ class MainActivity : BaseMovieActivity(), OnItemClickListener<SearchRequest.Resu
     }
 
     private fun search() {
+        mainRecyclerMovies.show()
         moviesVM.search(mainEdtSearch.toStr())
     }
 
@@ -73,9 +74,21 @@ class MainActivity : BaseMovieActivity(), OnItemClickListener<SearchRequest.Resu
                 adapter.updateList(it)
             }
         })
-        if (moviesVM.lastSearchTerm.isNotEmpty())
-            mainRecyclerMovies.visibility = View.VISIBLE
 
+        if (moviesVM.lastSearchTerm.isNotEmpty())
+            mainRecyclerMovies.show()
+
+        moviesVM.getFavorites().observe(this, Observer {
+            val searchList = adapter.searchList
+            it?.let { favoritesList ->
+                favoritesList.forEach {
+                    searchList.forEach { searchItem ->
+                        searchItem.isFavorite = favoritesList.any { it.id == searchItem.id }
+                    }
+                }
+                adapter.updateList(searchList)
+            }
+        })
     }
 
     private fun setupEditTextBehavior() {

@@ -22,8 +22,13 @@ class MoviesVM(moviesDao: MoviesDao) : ViewModel() {
             reset(searchTerm)
         repository.search(searchTerm, page, object : ResultListener<List<SearchRequest.Result>> {
             override fun onSucess(data: List<SearchRequest.Result>) {
-                val movies = observableSearchList.value ?: arrayListOf()
+                //get current movie list
+                var movies = observableSearchList.value ?: arrayListOf()
+                //add new movies from the request to the list
                 movies.addAll(data)
+                //set favorites movies flag
+                movies = setSeachRequestFavorites(movies)
+                //notify the livedata with the new movies
                 observableSearchList.value = movies
                 isLoading = false
             }
@@ -32,6 +37,16 @@ class MoviesVM(moviesDao: MoviesDao) : ViewModel() {
                 isLoading = false
             }
         })
+    }
+
+    private fun setSeachRequestFavorites(data: MutableList<SearchRequest.Result>): MutableList<SearchRequest.Result> {
+        val favorites = getFavoritesSync()
+        favorites.forEach {
+            data.forEach { searchItem ->
+                searchItem.isFavorite = favorites.any { it.id == searchItem.id }
+            }
+        }
+        return data
     }
 
     private fun reset(searchTerm: String) {
@@ -46,7 +61,7 @@ class MoviesVM(moviesDao: MoviesDao) : ViewModel() {
 
     fun getFavorites() = repository.getFavorites()
 
-    fun getFavoritesSync() = repository.getFavorites()
+    fun getFavoritesSync() = repository.getFavoritesSync()
 
     fun loadNextPage() {
         if (!isLoading && !lastPageReached) {

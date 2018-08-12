@@ -1,16 +1,14 @@
 package tgo1014.yoyocinema.data.adapters
 
+
 import android.support.design.button.MaterialButton
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-
-
 import tgo1014.yoyocinema.Constants
 import tgo1014.yoyocinema.R
 import tgo1014.yoyocinema.data.network.requests.SearchRequest
@@ -33,8 +31,16 @@ class SearchRequestAdapter(var searchList: MutableList<SearchRequest.Result>,
         holder.background.loadUrl(Constants.BASE_IMG_URL + Constants.BACKDROP_SIZE_300 + item.backdropPath, R.drawable.ic_movie_background_placeholder)
         holder.itemView.setOnClickListener { listener.onClick(searchList[holder.adapterPosition]) }
         holder.btnFavorite.setOnClickListener {
+            item.isFavorite = !item.isFavorite
+            handleFavoriteStarColor(holder.btnFavorite, item.isFavorite)
             favoriteListener.onClick(item.id)
         }
+        handleFavoriteStarColor(holder.btnFavorite, item.isFavorite)
+    }
+
+    private fun handleFavoriteStarColor(button: MaterialButton, isFavorite: Boolean) {
+        val iconTint = if (isFavorite) R.color.colorFavorite else android.R.color.white
+        button.setIconTintResource(iconTint)
     }
 
     fun updateList(list: List<SearchRequest.Result>) {
@@ -43,6 +49,7 @@ class SearchRequestAdapter(var searchList: MutableList<SearchRequest.Result>,
             override fun getOldListSize() = searchList.size
             override fun getNewListSize() = list.size
             override fun areContentsTheSame(old: Int, new: Int) = searchList[old].id == list[new].id
+                    && searchList[old].isFavorite == list[new].isFavorite
         })
         searchList = list.toMutableList()
         diff.dispatchUpdatesTo(this)

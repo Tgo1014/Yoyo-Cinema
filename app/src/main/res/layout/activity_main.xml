@@ -8,7 +8,7 @@
     tools:context=".ui.MainActivity">
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/textInputLayout"
+        android:id="@+id/mainTextInputLayout"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginStart="8dp"
@@ -18,7 +18,8 @@
         app:layout_constraintEnd_toStartOf="@+id/mainBtnSearch"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/mainEdtSearch"
@@ -38,11 +39,10 @@
         android:layout_marginEnd="8dp"
         android:backgroundTint="@color/colorAccent"
         android:src="@drawable/ic_search"
-        app:layout_constraintBottom_toTopOf="@id/mainRecyclerMovies"
+        app:layout_constraintBottom_toBottomOf="@id/mainTextInputLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textInputLayout"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintStart_toEndOf="@+id/mainTextInputLayout"
+        app:layout_constraintTop_toTopOf="@id/mainTextInputLayout" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/mainRecyclerMovies"
@@ -54,8 +54,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/item_movie"
-        tools:visibility="visible" />
+        tools:listitem="@layout/item_movie" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/mainFabFavorites"
