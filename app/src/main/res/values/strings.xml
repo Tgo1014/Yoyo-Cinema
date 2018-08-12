@@ -11,4 +11,7 @@
     <string name="str_unable_to_get_movie_details">Unable to get movie details</string>
     <string name="str_movie_poster">Movie Poster</string>
     <string name="str_movie_poster_header">Movie Poster Header</string>
+    <string name="str_search_a_movie">Search a movie</string>
+    <string name="str_no_favorites">No favorites yet. Add some in the main screen and come back here later :)</string>
+    <string name="str_favorites">Favorites</string>
 </resources>

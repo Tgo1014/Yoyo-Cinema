@@ -1,10 +1,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/detail_activity_scrollview"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginTop="?attr/actionBarSize">
+    android:layout_height="match_parent">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -13,25 +11,27 @@
         <ImageView
             android:id="@+id/detailActivityIvHeader"
             android:layout_width="match_parent"
-            android:layout_height="170dp"
-            android:foreground="@drawable/bg_black_gradient"
+            android:layout_height="220dp"
+            android:foreground="@drawable/bg_gradient"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_movie_placeholder"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_movie_placeholder" />
 
         <ImageView
             android:id="@+id/detailActivityIvPoster"
             android:layout_width="0dp"
-            android:layout_height="150dp"
-            android:layout_marginLeft="8dp"
+            android:layout_height="190dp"
             android:layout_marginStart="8dp"
-            android:src="@drawable/ic_movie_placeholder"
-            app:layout_constraintBottom_toBottomOf="@+id/detailActivityIvHeader"
-            app:layout_constraintDimensionRatio="w,2:3"
+            android:adjustViewBounds="false"
+            android:cropToPadding="false"
+            app:layout_constraintBottom_toBottomOf="@id/detailActivityTagline"
+            app:layout_constraintDimensionRatio="2:3"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/detailActivityIvHeader" />
+            app:layout_constraintTop_toBottomOf="@id/detailActivityIvHeader"
+            app:layout_constraintVertical_bias="1.0"
+            tools:src="@drawable/ic_movie_placeholder" />
 
         <TextView
             android:id="@+id/detailActivityTvTitle"
@@ -41,7 +41,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:textAppearance="@android:style/TextAppearance.Material.Title"
-            android:textColor="@android:color/white"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/detailActivityIvHeader"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/detailActivityIvPoster"
@@ -71,6 +71,8 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/str_overview"
+            android:textAppearance="@android:style/TextAppearance.Material.Title"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/detailActivityIvPoster" />
@@ -80,6 +82,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
+
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
@@ -99,6 +102,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/str_infos"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/detailActivityTvOverviewContent" />
@@ -110,6 +114,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/str_homepage"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/detailActivityTvInfo" />
 
@@ -122,7 +127,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/detail_activity_barrier"
+            app:layout_constraintStart_toEndOf="@+id/detailActivityBarrier"
             app:layout_constraintTop_toTopOf="@+id/detailActivityTvHomepage"
             tools:text="@tools:sample/lorem" />
 
@@ -133,6 +138,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/str_release_date"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/detailActivityTvHomepageContent" />
 
@@ -146,7 +152,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/detail_activity_barrier"
+            app:layout_constraintStart_toEndOf="@+id/detailActivityBarrier"
             app:layout_constraintTop_toTopOf="@+id/detailActivityTvReleaseDate"
             tools:text="@tools:sample/date/mmddyy" />
 
@@ -157,6 +163,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/str_status"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/detailActivityTvReleaseDateContent" />
 
@@ -169,12 +176,12 @@
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/detail_activity_barrier"
+            app:layout_constraintStart_toEndOf="@+id/detailActivityBarrier"
             app:layout_constraintTop_toTopOf="@+id/detailActivityTvStatus"
             tools:text="@tools:sample/lorem" />
 
         <android.support.constraint.Barrier
-            android:id="@+id/detail_activity_barrier"
+            android:id="@+id/detailActivityBarrier"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="right"
@@ -182,6 +189,7 @@
             tools:ignore="MissingConstraints" />
 
         <ProgressBar
+            android:id="@+id/detailActivityProgress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="@id/detailActivityIvPoster"

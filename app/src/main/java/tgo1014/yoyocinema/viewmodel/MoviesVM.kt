@@ -13,7 +13,7 @@ class MoviesVM(moviesDao: MoviesDao) : ViewModel() {
     private var page = 1
     var isLoading = false
     private var lastPageReached = false
-    private lateinit var lastSearchTerm: String
+    var lastSearchTerm: String = ""
 
     val observableSearchList = MutableLiveData<MutableList<SearchRequest.Result>>()
 
@@ -35,11 +35,29 @@ class MoviesVM(moviesDao: MoviesDao) : ViewModel() {
 
     fun getMovie(movieId: Int) = repository.getMovie(movieId)
 
+    fun getFavorites() = repository.getFavorites()
+
+    fun getFavoritesSync() = repository.getFavorites()
+
     fun loadNextPage() {
         if (!isLoading && !lastPageReached) {
             page++
             isLoading = true
             search(lastSearchTerm)
         }
+    }
+
+    fun toggleFavorite(movieId: Int?) {
+        if (movieId == null) return
+        //if it's already a favorite, remove it
+        if (repository.getFavoritesSync().map { it.id }.contains(movieId)) {
+            val movie = repository.getMovieSync(movieId)
+            movie?.let {
+                repository.delete(movie)
+            }
+            return
+        }
+        //else get music and set as a favorite
+        repository.getMovieAndSetAsFavorite(movieId)
     }
 }

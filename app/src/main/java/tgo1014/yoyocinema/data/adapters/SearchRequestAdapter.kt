@@ -1,6 +1,5 @@
 package tgo1014.yoyocinema.data.adapters
 
-
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -9,40 +8,42 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+
+
 import tgo1014.yoyocinema.Constants
 import tgo1014.yoyocinema.R
-import tgo1014.yoyocinema.data.entities.Movie
+import tgo1014.yoyocinema.data.network.requests.SearchRequest
 import tgo1014.yoyocinema.helpers.extensions.loadUrl
 
-class MovieAdapter(var movieList: MutableList<Movie>,
-                   private val listener: OnItemClickListener<Movie>,
-                   private val favoriteListener: OnItemClickListener<Int?>)
-    : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+class SearchRequestAdapter(var searchList: MutableList<SearchRequest.Result>,
+                           private val listener: OnItemClickListener<SearchRequest.Result>,
+                           private val favoriteListener: OnItemClickListener<Int?>)
+    : RecyclerView.Adapter<SearchRequestAdapter.MovieViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder =
             MovieViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_movie, parent, false))
 
-    override fun getItemCount() = movieList.size
+    override fun getItemCount() = searchList.size
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        val item = movieList[holder.adapterPosition]
+        val item = searchList[holder.adapterPosition]
         holder.name.text = item.title
         holder.poster.loadUrl(Constants.BASE_IMG_URL + Constants.POSTER_SIZE_342 + item.posterPath, R.drawable.ic_movie_placeholder)
-        holder.background.loadUrl(Constants.BASE_IMG_URL + Constants.BACKDROP_SIZE_780 + item.backdropPath, R.drawable.ic_movie_background_placeholder)
-        holder.itemView.setOnClickListener { listener.onClick(movieList[holder.adapterPosition]) }
+        holder.background.loadUrl(Constants.BASE_IMG_URL + Constants.BACKDROP_SIZE_300 + item.backdropPath, R.drawable.ic_movie_background_placeholder)
+        holder.itemView.setOnClickListener { listener.onClick(searchList[holder.adapterPosition]) }
         holder.btnFavorite.setOnClickListener {
             favoriteListener.onClick(item.id)
         }
     }
 
-    fun updateList(list: List<Movie>) {
+    fun updateList(list: List<SearchRequest.Result>) {
         val diff = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
-            override fun areItemsTheSame(old: Int, new: Int) = movieList[old].id == list[new].id
-            override fun getOldListSize() = movieList.size
+            override fun areItemsTheSame(old: Int, new: Int) = searchList[old].id == list[new].id
+            override fun getOldListSize() = searchList.size
             override fun getNewListSize() = list.size
-            override fun areContentsTheSame(old: Int, new: Int) = movieList[old].id == list[new].id
+            override fun areContentsTheSame(old: Int, new: Int) = searchList[old].id == list[new].id
         })
-        movieList = list.toMutableList()
+        searchList = list.toMutableList()
         diff.dispatchUpdatesTo(this)
     }
 

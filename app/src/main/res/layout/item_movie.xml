@@ -13,7 +13,7 @@
             android:id="@+id/itemMovieIvBackground"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:foreground="@drawable/bg_black_gradient"
+            android:foreground="@drawable/bg_gradient"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_movie_background_placeholder"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -36,6 +36,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
+            android:id="@+id/itemMovieImgBtnFavorite"
             style="@style/Widget.MaterialComponents.Button"
             android:layout_width="50dp"
             android:layout_height="50dp"

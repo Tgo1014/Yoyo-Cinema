@@ -15,9 +15,18 @@ interface MoviesDao : BaseRepository<Movie> {
     override fun getAll(): LiveData<List<Movie>>
 
     @Query("SELECT * FROM Movie WHERE :id = id")
-    fun getById(id: Int) : LiveData<Movie>
+    fun getById(id: Int): LiveData<Movie>
 
-    @Update(onConflict = OnConflictStrategy.REPLACE)
+    @Query("SELECT * FROM Movie WHERE :id = id")
+    fun getByIdSync(id: Int): Movie?
+
+    @Query("SELECT * FROM Movie WHERE isFavorite = 1")
+    fun getFavorites(): LiveData<List<Movie>>
+
+    @Query("SELECT * FROM Movie WHERE isFavorite = 1")
+    fun getFavoritesSync(): List<Movie>
+
+    @Update
     override fun update(vararg item: Movie)
 
     @Delete

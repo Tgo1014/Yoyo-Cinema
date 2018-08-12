@@ -1,7 +1,9 @@
 package tgo1014.yoyocinema.data.repositories
 
 import android.arch.lifecycle.LiveData
+import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.experimental.runBlocking
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -50,6 +52,12 @@ class MoviesRepository(val dao: MoviesDao) : BaseRepository<Movie> {
         })
     }
 
+    fun getFavorites() = dao.getFavorites()
+
+    fun getFavoritesSync() = runBlocking {
+        return@runBlocking async { dao.getFavoritesSync() }.await()
+    }
+
     fun getMovie(movieId: Int): LiveData<Resource<Movie>> {
         return object : NetworkBoundResource<Movie, Movie>() {
             override fun saveCallResult(item: Movie) = add(item)
@@ -57,5 +65,29 @@ class MoviesRepository(val dao: MoviesDao) : BaseRepository<Movie> {
             override fun createCall(): Call<Movie> = RestClient.moviesService.getMovieDetails(movieId)
             override fun shouldFetch(data: Movie?) = (data == null)
         }.asLiveData()
+    }
+
+    fun getMovieSync(movieId: Int) = runBlocking {
+        return@runBlocking async { dao.getByIdSync(movieId) }.await()
+    }
+
+    fun getMovieAndSetAsFavorite(favoriteId: Int?) {
+        favoriteId?.run {
+            RestClient.moviesService.getMovieDetails(favoriteId).enqueue(object : Callback<Movie?> {
+                override fun onFailure(call: Call<Movie?>?, t: Throwable?) {
+                    //TODO implement a message when the request fails
+                }
+
+                override fun onResponse(call: Call<Movie?>?, response: Response<Movie?>?) {
+                    if (response?.isSuccessful == true) {
+                        val m = response.body()
+                        m?.let {
+                            it.isFavorite = true
+                            add(it)
+                        }
+                    }
+                }
+            })
+        }
     }
 }

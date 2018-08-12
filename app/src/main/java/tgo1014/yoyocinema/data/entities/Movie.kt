@@ -11,7 +11,6 @@ data class Movie(
         @SerializedName("id") val id: Int?,
         @SerializedName("adult") val adult: Boolean?,
         @SerializedName("backdrop_path") val backdropPath: String?,
-        @SerializedName("belongs_to_collection") val belongsToCollection: BelongsToCollection?,
         @SerializedName("budget") val budget: Int?,
         @SerializedName("genres") val genres: List<Genre>?,
         @SerializedName("homepage") val homepage: String?,
@@ -32,7 +31,8 @@ data class Movie(
         @SerializedName("title") val title: String?,
         @SerializedName("video") val video: Boolean?,
         @SerializedName("vote_average") val voteAverage: Double?,
-        @SerializedName("vote_count") val voteCount: Int?
+        @SerializedName("vote_count") val voteCount: Int?,
+        var isFavorite: Boolean = false
 ) {
 
     data class ProductionCompany(
@@ -58,12 +58,5 @@ data class Movie(
     data class SpokenLanguage(
             @SerializedName("iso_639_1") val iso6391: String?,
             @SerializedName("name") val name: String?
-    )
-
-    data class BelongsToCollection(
-            @SerializedName("id") val id: Int?,
-            @SerializedName("name") val name: String?,
-            @SerializedName("poster_path") val posterPath: String?,
-            @SerializedName("backdrop_path") val backdropPath: String?
     )
 }
