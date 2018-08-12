@@ -24,6 +24,7 @@
             android:layout_width="0dp"
             android:layout_height="190dp"
             android:layout_marginStart="8dp"
+            android:transitionName="@string/str_poster_transition"
             app:cardElevation="10dp"
             app:layout_constraintBottom_toBottomOf="@id/detailActivityTagline"
             app:layout_constraintDimensionRatio="2:3"
@@ -197,8 +198,7 @@
             android:id="@+id/detailActivityProgress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@id/detailActivityCardBackground"
-            app:layout_constraintEnd_toEndOf="@id/detailActivityCardBackground"
+            android:elevation="12dp"
             app:layout_constraintStart_toStartOf="@id/detailActivityCardBackground"
             app:layout_constraintTop_toTopOf="@id/detailActivityCardBackground" />
 

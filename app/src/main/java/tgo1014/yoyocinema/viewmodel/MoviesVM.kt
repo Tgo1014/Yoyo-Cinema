@@ -11,7 +11,7 @@ class MoviesVM(moviesDao: MoviesDao) : ViewModel() {
 
     private val repository: MoviesRepository = MoviesRepository(moviesDao)
     private var page = 1
-    var isLoading = false
+    val isLoading = MutableLiveData<Boolean>().apply { value = false }
     private var lastPageReached = false
     var lastSearchTerm: String = ""
 
@@ -20,6 +20,8 @@ class MoviesVM(moviesDao: MoviesDao) : ViewModel() {
     fun search(searchTerm: String, loadMoreSearch: Boolean = false) {
         if (!loadMoreSearch)
             reset(searchTerm)
+
+        isLoading.value = true
         repository.search(searchTerm, page, object : ResultListener<List<SearchRequest.Result>> {
             override fun onSucess(data: List<SearchRequest.Result>) {
                 //get current movie list
@@ -30,11 +32,11 @@ class MoviesVM(moviesDao: MoviesDao) : ViewModel() {
                 movies = setSeachRequestFavorites(movies)
                 //notify the livedata with the new movies
                 observableSearchList.value = movies
-                isLoading = false
+                isLoading.value = false
             }
 
             override fun onFailure(message: String) {
-                isLoading = false
+                isLoading.value = false
             }
         })
     }
@@ -52,7 +54,7 @@ class MoviesVM(moviesDao: MoviesDao) : ViewModel() {
     private fun reset(searchTerm: String) {
         lastSearchTerm = searchTerm
         observableSearchList.value = arrayListOf()
-        isLoading = false
+        isLoading.value = false
         lastPageReached = false
         page = 1
     }
@@ -64,9 +66,9 @@ class MoviesVM(moviesDao: MoviesDao) : ViewModel() {
     fun getFavoritesSync() = repository.getFavoritesSync()
 
     fun loadNextPage() {
-        if (!isLoading && !lastPageReached) {
+        if (!isLoading.value!! && !lastPageReached) {
             page++
-            isLoading = true
+            isLoading.value = true
             search(lastSearchTerm, true)
         }
     }

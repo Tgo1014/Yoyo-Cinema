@@ -3,14 +3,16 @@ package tgo1014.yoyocinema.ui
 import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
 import kotlinx.android.synthetic.main.activity_favorites.*
 import tgo1014.yoyocinema.R
 import tgo1014.yoyocinema.data.adapters.MovieAdapter
 import tgo1014.yoyocinema.data.adapters.OnItemClickListener
+import tgo1014.yoyocinema.data.adapters.OnMovieItemClicked
 import tgo1014.yoyocinema.data.entities.Movie
 import tgo1014.yoyocinema.helpers.extensions.show
 
-class FavoritesActivity : BaseMovieActivity(), OnItemClickListener<Movie> {
+class FavoritesActivity : BaseMovieActivity(), OnMovieItemClicked<Movie, View>, OnItemClickListener<Int?> {
 
     private lateinit var adapter: MovieAdapter
 
@@ -22,6 +24,7 @@ class FavoritesActivity : BaseMovieActivity(), OnItemClickListener<Movie> {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         getFavoritesMovies()
+        configRecycler(arrayListOf())
     }
 
     private fun getFavoritesMovies() {
@@ -32,21 +35,22 @@ class FavoritesActivity : BaseMovieActivity(), OnItemClickListener<Movie> {
                 configRecycler(arrayListOf())
                 return@Observer
             }
-            configRecycler(it)
+            adapter.updateList(it)
         })
     }
 
     private fun configRecycler(movieList: List<Movie>) {
-        adapter = MovieAdapter(movieList.toMutableList(), this, object : OnItemClickListener<Int?> {
-            override fun onClick(item: Int?) {
-                moviesVM.toggleFavorite(item)
-            }
-        }, true)
+        adapter = MovieAdapter(movieList.toMutableList(), this, this, true)
         favoritesRecyclerMovies.layoutManager = LinearLayoutManager(this)
         favoritesRecyclerMovies.adapter = adapter
     }
 
-    override fun onClick(item: Movie) {
-        MovieDetailsActivity.startActivity(this, item.id)
+
+    override fun onClick(item: Int?) {
+        moviesVM.toggleFavorite(item)
+    }
+
+    override fun onMovieIdClicked(item: Movie, view: View) {
+        MovieDetailsActivity.startWithAnimation(this, item.id, view)
     }
 }

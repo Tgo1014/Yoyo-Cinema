@@ -2,7 +2,7 @@ package tgo1014.yoyocinema.data.adapters
 
 
 import android.support.design.button.MaterialButton
-import android.support.v4.content.ContextCompat
+import android.support.v4.view.ViewCompat
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -16,7 +16,7 @@ import tgo1014.yoyocinema.data.entities.Movie
 import tgo1014.yoyocinema.helpers.extensions.loadUrl
 
 class MovieAdapter(var movieList: MutableList<Movie>,
-                   private val listener: OnItemClickListener<Movie>,
+                   private val listener: OnMovieItemClicked<Movie, View>,
                    private val favoriteListener: OnItemClickListener<Int?>,
                    private val isFavoriteList: Boolean = false)
     : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
@@ -28,10 +28,14 @@ class MovieAdapter(var movieList: MutableList<Movie>,
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val item = movieList[holder.adapterPosition]
+
+        //shared transition
+        ViewCompat.setTransitionName(holder.poster, item.id.toString())
+
         holder.name.text = item.title
         holder.poster.loadUrl(Constants.BASE_IMG_URL + Constants.POSTER_SIZE_342 + item.posterPath, R.drawable.ic_movie_placeholder)
         holder.background.loadUrl(Constants.BASE_IMG_URL + Constants.BACKDROP_SIZE_780 + item.backdropPath, R.drawable.ic_movie_background_placeholder)
-        holder.itemView.setOnClickListener { listener.onClick(movieList[holder.adapterPosition]) }
+        holder.itemView.setOnClickListener { listener.onMovieIdClicked(movieList[holder.adapterPosition], holder.poster) }
         holder.btnFavorite.setOnClickListener {
             favoriteListener.onClick(item.id)
         }
@@ -45,6 +49,7 @@ class MovieAdapter(var movieList: MutableList<Movie>,
             override fun getOldListSize() = movieList.size
             override fun getNewListSize() = list.size
             override fun areContentsTheSame(old: Int, new: Int) = movieList[old].id == list[new].id
+                    && movieList[old].isFavorite == list[new].isFavorite
         })
         movieList = list.toMutableList()
         diff.dispatchUpdatesTo(this)

@@ -6,17 +6,19 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.KeyEvent
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import kotlinx.android.synthetic.main.activity_main.*
 import tgo1014.yoyocinema.R
 import tgo1014.yoyocinema.data.adapters.OnItemClickListener
+import tgo1014.yoyocinema.data.adapters.OnMovieItemClicked
 import tgo1014.yoyocinema.data.adapters.SearchRequestAdapter
 import tgo1014.yoyocinema.data.network.requests.SearchRequest
 import tgo1014.yoyocinema.helpers.EndlessRecyclerViewScrollListener
 import tgo1014.yoyocinema.helpers.extensions.show
 import tgo1014.yoyocinema.helpers.extensions.toStr
 
-class MainActivity : BaseMovieActivity(), OnItemClickListener<SearchRequest.Result> {
+class MainActivity : BaseMovieActivity(), OnMovieItemClicked<SearchRequest.Result, View>, OnItemClickListener<Int?> {
 
     lateinit var adapter: SearchRequestAdapter
     lateinit var layoutManager: LinearLayoutManager
@@ -33,11 +35,7 @@ class MainActivity : BaseMovieActivity(), OnItemClickListener<SearchRequest.Resu
     }
 
     private fun configRecycler() {
-        adapter = SearchRequestAdapter(arrayListOf(), this, object : OnItemClickListener<Int?> {
-            override fun onClick(item: Int?) {
-                onFavoriteClick(item)
-            }
-        })
+        adapter = SearchRequestAdapter(arrayListOf(), this, this)
         layoutManager = LinearLayoutManager(this)
         mainRecyclerMovies.layoutManager = layoutManager
         mainRecyclerMovies.adapter = adapter
@@ -75,6 +73,10 @@ class MainActivity : BaseMovieActivity(), OnItemClickListener<SearchRequest.Resu
             }
         })
 
+        moviesVM.isLoading.observe(this, Observer {
+            it?.let { mainProgress.show(it) }
+        })
+
         if (moviesVM.lastSearchTerm.isNotEmpty())
             mainRecyclerMovies.show()
 
@@ -101,12 +103,16 @@ class MainActivity : BaseMovieActivity(), OnItemClickListener<SearchRequest.Resu
         }
     }
 
-    override fun onClick(item: SearchRequest.Result) {
-        MovieDetailsActivity.startActivity(this, item.id)
-    }
-
     private fun onFavoriteClick(favoriteId: Int?) {
         moviesVM.toggleFavorite(favoriteId)
+    }
+
+    override fun onClick(item: Int?) {
+        onFavoriteClick(item)
+    }
+
+    override fun onMovieIdClicked(item: SearchRequest.Result, view: View) {
+        MovieDetailsActivity.startWithAnimation(this, item.id, view)
     }
 }
 

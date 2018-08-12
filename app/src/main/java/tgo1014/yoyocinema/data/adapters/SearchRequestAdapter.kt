@@ -2,6 +2,7 @@ package tgo1014.yoyocinema.data.adapters
 
 
 import android.support.design.button.MaterialButton
+import android.support.v4.view.ViewCompat
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -15,7 +16,7 @@ import tgo1014.yoyocinema.data.network.requests.SearchRequest
 import tgo1014.yoyocinema.helpers.extensions.loadUrl
 
 class SearchRequestAdapter(var searchList: MutableList<SearchRequest.Result>,
-                           private val listener: OnItemClickListener<SearchRequest.Result>,
+                           private val listener: OnMovieItemClicked<SearchRequest.Result, View>,
                            private val favoriteListener: OnItemClickListener<Int?>)
     : RecyclerView.Adapter<SearchRequestAdapter.MovieViewHolder>() {
 
@@ -26,10 +27,14 @@ class SearchRequestAdapter(var searchList: MutableList<SearchRequest.Result>,
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val item = searchList[holder.adapterPosition]
+
+        //shared transition
+        ViewCompat.setTransitionName(holder.poster, item.id.toString())
+
         holder.name.text = item.title
         holder.poster.loadUrl(Constants.BASE_IMG_URL + Constants.POSTER_SIZE_342 + item.posterPath, R.drawable.ic_movie_placeholder)
         holder.background.loadUrl(Constants.BASE_IMG_URL + Constants.BACKDROP_SIZE_300 + item.backdropPath, R.drawable.ic_movie_background_placeholder)
-        holder.itemView.setOnClickListener { listener.onClick(searchList[holder.adapterPosition]) }
+        holder.itemView.setOnClickListener { listener.onMovieIdClicked(searchList[holder.adapterPosition], holder.poster) }
         holder.btnFavorite.setOnClickListener {
             item.isFavorite = !item.isFavorite
             handleFavoriteStarColor(holder.btnFavorite, item.isFavorite)
