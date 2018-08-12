@@ -43,10 +43,12 @@ class MainActivity : BaseMovieActivity(), OnItemClickListener<SearchRequest.Resu
         mainRecyclerMovies.adapter = adapter
     }
 
+    private fun search() {
+        moviesVM.search(mainEdtSearch.toStr())
+    }
+
     private fun setListeners() {
-        mainBtnSearch.setOnClickListener {
-            moviesVM.search(mainEdtSearch.toStr())
-        }
+        mainBtnSearch.setOnClickListener { search() }
         mainRecyclerMovies.addOnScrollListener(object : EndlessRecyclerViewScrollListener(layoutManager) {
             override fun onLoadMore(totalItemsCount: Int, view: RecyclerView) {
                 moviesVM.loadNextPage()
@@ -67,7 +69,7 @@ class MainActivity : BaseMovieActivity(), OnItemClickListener<SearchRequest.Resu
 
     private fun handleViewModel() {
         moviesVM.observableSearchList.observe(this, Observer {
-            if (it?.isNotEmpty() == true) {
+            it?.let {
                 adapter.updateList(it)
             }
         })
@@ -78,8 +80,9 @@ class MainActivity : BaseMovieActivity(), OnItemClickListener<SearchRequest.Resu
 
     private fun setupEditTextBehavior() {
         mainEdtSearch.setOnEditorActionListener { _, actionId, code ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH || ((code.action == KeyEvent.ACTION_DOWN) && (code.keyCode == KeyEvent.KEYCODE_ENTER))) {
-                moviesVM.search(mainEdtSearch.toStr())
+            if (actionId == EditorInfo.IME_ACTION_SEARCH ||
+                    ((code.action == KeyEvent.ACTION_DOWN) && (code.keyCode == KeyEvent.KEYCODE_ENTER))) {
+                search()
             }
             true
         }

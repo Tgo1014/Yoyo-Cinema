@@ -17,8 +17,9 @@ class MoviesVM(moviesDao: MoviesDao) : ViewModel() {
 
     val observableSearchList = MutableLiveData<MutableList<SearchRequest.Result>>()
 
-    fun search(searchTerm: String) {
-        lastSearchTerm = searchTerm
+    fun search(searchTerm: String, loadMoreSearch: Boolean = false) {
+        if (!loadMoreSearch)
+            reset(searchTerm)
         repository.search(searchTerm, page, object : ResultListener<List<SearchRequest.Result>> {
             override fun onSucess(data: List<SearchRequest.Result>) {
                 val movies = observableSearchList.value ?: arrayListOf()
@@ -33,6 +34,14 @@ class MoviesVM(moviesDao: MoviesDao) : ViewModel() {
         })
     }
 
+    private fun reset(searchTerm: String) {
+        lastSearchTerm = searchTerm
+        observableSearchList.value = arrayListOf()
+        isLoading = false
+        lastPageReached = false
+        page = 1
+    }
+
     fun getMovie(movieId: Int) = repository.getMovie(movieId)
 
     fun getFavorites() = repository.getFavorites()
@@ -43,7 +52,7 @@ class MoviesVM(moviesDao: MoviesDao) : ViewModel() {
         if (!isLoading && !lastPageReached) {
             page++
             isLoading = true
-            search(lastSearchTerm)
+            search(lastSearchTerm, true)
         }
     }
 
