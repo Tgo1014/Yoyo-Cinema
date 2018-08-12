@@ -41,7 +41,7 @@ class FavoritesActivity : BaseMovieActivity(), OnItemClickListener<Movie> {
             override fun onClick(item: Int?) {
                 moviesVM.toggleFavorite(item)
             }
-        })
+        }, true)
         favoritesRecyclerMovies.layoutManager = LinearLayoutManager(this)
         favoritesRecyclerMovies.adapter = adapter
     }

@@ -1,5 +1,6 @@
 package tgo1014.yoyocinema.data.adapters
 
+import android.support.design.button.MaterialButton
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -51,6 +52,6 @@ class SearchRequestAdapter(var searchList: MutableList<SearchRequest.Result>,
         val name: TextView = itemView.findViewById(R.id.itemMovieTxtTitle)
         val poster: ImageView = itemView.findViewById(R.id.itemMovieIvPoster)
         val background: ImageView = itemView.findViewById(R.id.itemMovieIvBackground)
-        val btnFavorite: ImageButton = itemView.findViewById(R.id.itemMovieImgBtnFavorite)
+        val btnFavorite: MaterialButton = itemView.findViewById(R.id.itemMovieImgBtnFavorite)
     }
 }

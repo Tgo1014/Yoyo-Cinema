@@ -1,12 +1,13 @@
 package tgo1014.yoyocinema.data.adapters
 
 
+import android.support.design.button.MaterialButton
+import android.support.v4.content.ContextCompat
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import tgo1014.yoyocinema.Constants
@@ -16,7 +17,8 @@ import tgo1014.yoyocinema.helpers.extensions.loadUrl
 
 class MovieAdapter(var movieList: MutableList<Movie>,
                    private val listener: OnItemClickListener<Movie>,
-                   private val favoriteListener: OnItemClickListener<Int?>)
+                   private val favoriteListener: OnItemClickListener<Int?>,
+                   private val isFavoriteList: Boolean = false)
     : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder =
@@ -33,6 +35,8 @@ class MovieAdapter(var movieList: MutableList<Movie>,
         holder.btnFavorite.setOnClickListener {
             favoriteListener.onClick(item.id)
         }
+        if (isFavoriteList)
+            holder.btnFavorite.setIconTintResource(R.color.colorFavorite)
     }
 
     fun updateList(list: List<Movie>) {
@@ -50,6 +54,6 @@ class MovieAdapter(var movieList: MutableList<Movie>,
         val name: TextView = itemView.findViewById(R.id.itemMovieTxtTitle)
         val poster: ImageView = itemView.findViewById(R.id.itemMovieIvPoster)
         val background: ImageView = itemView.findViewById(R.id.itemMovieIvBackground)
-        val btnFavorite: ImageButton = itemView.findViewById(R.id.itemMovieImgBtnFavorite)
+        val btnFavorite: MaterialButton = itemView.findViewById(R.id.itemMovieImgBtnFavorite)
     }
 }
