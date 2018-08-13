@@ -33,7 +33,7 @@ class SearchRequestAdapter(var searchList: MutableList<SearchRequest.Result>,
 
         holder.name.text = item.title
         holder.poster.loadUrl(Constants.BASE_IMG_URL + Constants.POSTER_SIZE_342 + item.posterPath, R.drawable.ic_movie_placeholder)
-        holder.background.loadUrl(Constants.BASE_IMG_URL + Constants.BACKDROP_SIZE_300 + item.backdropPath, R.drawable.ic_movie_background_placeholder)
+        holder.background.loadUrl(Constants.BASE_IMG_URL + Constants.BACKDROP_SIZE_780 + item.backdropPath, R.drawable.ic_movie_background_placeholder)
         holder.itemView.setOnClickListener { listener.onMovieIdClicked(searchList[holder.adapterPosition], holder.poster) }
         holder.btnFavorite.setOnClickListener {
             item.isFavorite = !item.isFavorite

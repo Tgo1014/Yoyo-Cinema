@@ -93,5 +93,5 @@
             app:title="@string/app_name" />
 
     </android.support.design.widget.AppBarLayout>
-    
+
 </android.support.constraint.ConstraintLayout>
