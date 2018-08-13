@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Yoyo Cinema</string>
+
+    <string name="str_overview">Overview</string>
+    <string name="str_infos">Infos</string>
+    <string name="str_homepage">Homepage:</string>
+    <string name="str_release_date">Release Date:</string>
+    <string name="str_status">Status:</string>
+    <string name="str_search_a_movie">Search a movie</string>
+    <string name="str_no_favorites">No favorites yet. Add some in the main screen and come back here later :)</string>
+    <string name="str_favorites">Favorites</string>
+    <string name="str_poster_transition">poster_transition</string>
+    <string name="str_invalid_movieid">Invalid movieId</string>
+    <string name="str_unable_to_load_movie">Unable to load movie at moment</string>
+</resources>
