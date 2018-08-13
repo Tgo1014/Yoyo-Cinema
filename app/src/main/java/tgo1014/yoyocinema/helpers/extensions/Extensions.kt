@@ -7,6 +7,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.util.DisplayMetrics
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -43,3 +44,7 @@ fun Activity.showSnack(text: String, lenght: Int = Snackbar.LENGTH_SHORT) {
     Snackbar.make(findViewById(android.R.id.content), text, lenght).show()
 }
 
+infix fun Int.dpToPixel(context: Context): Int {
+    val metrics = context.resources.displayMetrics
+    return this * (metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT)
+}

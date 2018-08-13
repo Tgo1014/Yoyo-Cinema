@@ -2,9 +2,14 @@ package tgo1014.yoyocinema.ui
 
 import android.arch.lifecycle.Observer
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.support.v7.app.ActionBar
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.Toolbar
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -15,7 +20,10 @@ import tgo1014.yoyocinema.data.adapters.OnMovieItemClicked
 import tgo1014.yoyocinema.data.adapters.SearchRequestAdapter
 import tgo1014.yoyocinema.data.network.requests.SearchRequest
 import tgo1014.yoyocinema.helpers.EndlessRecyclerViewScrollListener
-import tgo1014.yoyocinema.helpers.extensions.*
+import tgo1014.yoyocinema.helpers.extensions.hideKeyboard
+import tgo1014.yoyocinema.helpers.extensions.show
+import tgo1014.yoyocinema.helpers.extensions.showSnack
+import tgo1014.yoyocinema.helpers.extensions.toStr
 
 class MainActivity : BaseMovieActivity(), OnMovieItemClicked<SearchRequest.Result, View>, OnItemClickListener<Int?> {
 
