@@ -12,14 +12,12 @@ object RestClient {
     val moviesService: MoviesService
 
     init {
-
-        val loggingInterceptor = HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
-        }
-
         val okHttpBuilder = OkHttpClient.Builder()
 
+        //log requests if its a debug project
         if (BuildConfig.DEBUG) {
+            val loggingInterceptor = HttpLoggingInterceptor()
+            loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
             okHttpBuilder.addInterceptor(loggingInterceptor)
         }
 
@@ -35,6 +33,9 @@ object RestClient {
         moviesService = retrofit.create(MoviesService::class.java)
     }
 
+    /**
+     * Ads the API needed for all requests
+     */
     private fun interceptAndAddApiKey(client: OkHttpClient.Builder) {
         client.addInterceptor { chain ->
             val original = chain.request()

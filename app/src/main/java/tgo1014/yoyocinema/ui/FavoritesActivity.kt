@@ -45,7 +45,6 @@ class FavoritesActivity : BaseMovieActivity(), OnMovieItemClicked<Movie, View>, 
         favoritesRecyclerMovies.adapter = adapter
     }
 
-
     override fun onClick(item: Int?) {
         moviesVM.toggleFavorite(item)
     }

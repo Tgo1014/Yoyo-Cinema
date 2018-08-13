@@ -11,19 +11,26 @@ class MoviesVM(moviesDao: MoviesDao) : ViewModel() {
 
     private val repository: MoviesRepository = MoviesRepository(moviesDao)
     private var page = 1
-    val isLoading = MutableLiveData<Boolean>().apply { value = false }
     private var lastPageReached = false
-    var lastSearchTerm: String = ""
 
+    val messagesToDisplay = MutableLiveData<String>()
+    val isLoading = MutableLiveData<Boolean>().apply { value = false }
+    var lastSearchTerm = MutableLiveData<String>().apply { value = "" }
     val observableSearchList = MutableLiveData<MutableList<SearchRequest.Result>>()
 
-    fun search(searchTerm: String, loadMoreSearch: Boolean = false) {
+    fun search(searchTerm: String?, loadMoreSearch: Boolean = false) {
+        if (searchTerm.isNullOrEmpty()) {
+            //TODO: Handle that hardcoded message
+            messagesToDisplay.value = "To search, type at least one letter"
+            return
+        }
+
         if (!loadMoreSearch)
             reset(searchTerm)
 
         isLoading.value = true
-        repository.search(searchTerm, page, object : ResultListener<List<SearchRequest.Result>> {
-            override fun onSucess(data: List<SearchRequest.Result>) {
+        repository.search(searchTerm!!, page, object : ResultListener<List<SearchRequest.Result>> {
+            override fun onSuccess(data: List<SearchRequest.Result>) {
                 //get current movie list
                 var movies = observableSearchList.value ?: arrayListOf()
                 //add new movies from the request to the list
@@ -37,6 +44,7 @@ class MoviesVM(moviesDao: MoviesDao) : ViewModel() {
 
             override fun onFailure(message: String) {
                 isLoading.value = false
+                messagesToDisplay.value = message
             }
         })
     }
@@ -51,8 +59,8 @@ class MoviesVM(moviesDao: MoviesDao) : ViewModel() {
         return data
     }
 
-    private fun reset(searchTerm: String) {
-        lastSearchTerm = searchTerm
+    private fun reset(searchTerm: String?) {
+        lastSearchTerm.value = searchTerm
         observableSearchList.value = arrayListOf()
         isLoading.value = false
         lastPageReached = false
@@ -69,7 +77,7 @@ class MoviesVM(moviesDao: MoviesDao) : ViewModel() {
         if (!isLoading.value!! && !lastPageReached) {
             page++
             isLoading.value = true
-            search(lastSearchTerm, true)
+            search(lastSearchTerm.value, true)
         }
     }
 

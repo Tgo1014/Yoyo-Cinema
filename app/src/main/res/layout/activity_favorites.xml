@@ -14,18 +14,23 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/item_movie" />
+        tools:listitem="@layout/item_movie"
+        tools:visibility="gone" />
 
     <TextView
         android:id="@+id/favoritesTxtMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:drawableTop="@drawable/ic_popcorn"
+        android:drawablePadding="12dp"
         android:gravity="center"
         android:padding="12dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="@tools:sample/lorem" />
+        tools:text="@tools:sample/lorem"
+        tools:visibility="visible" />
 
 </android.support.constraint.ConstraintLayout>

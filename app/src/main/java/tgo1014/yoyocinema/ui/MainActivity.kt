@@ -15,8 +15,7 @@ import tgo1014.yoyocinema.data.adapters.OnMovieItemClicked
 import tgo1014.yoyocinema.data.adapters.SearchRequestAdapter
 import tgo1014.yoyocinema.data.network.requests.SearchRequest
 import tgo1014.yoyocinema.helpers.EndlessRecyclerViewScrollListener
-import tgo1014.yoyocinema.helpers.extensions.show
-import tgo1014.yoyocinema.helpers.extensions.toStr
+import tgo1014.yoyocinema.helpers.extensions.*
 
 class MainActivity : BaseMovieActivity(), OnMovieItemClicked<SearchRequest.Result, View>, OnItemClickListener<Int?> {
 
@@ -42,7 +41,7 @@ class MainActivity : BaseMovieActivity(), OnMovieItemClicked<SearchRequest.Resul
     }
 
     private fun search() {
-        mainRecyclerMovies.show()
+        hideKeyboard()
         moviesVM.search(mainEdtSearch.toStr())
     }
 
@@ -55,6 +54,7 @@ class MainActivity : BaseMovieActivity(), OnMovieItemClicked<SearchRequest.Resul
         })
         mainRecyclerMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                //handle the scroll direction to show or hide the fab
                 when {
                     dy > 0 -> mainFabFavorites.hide()
                     dy < 0 -> mainFabFavorites.show()
@@ -77,20 +77,16 @@ class MainActivity : BaseMovieActivity(), OnMovieItemClicked<SearchRequest.Resul
             it?.let { mainProgress.show(it) }
         })
 
-        if (moviesVM.lastSearchTerm.isNotEmpty())
-            mainRecyclerMovies.show()
-
-        moviesVM.getFavorites().observe(this, Observer {
-            val searchList = adapter.searchList
-            it?.let { favoritesList ->
-                favoritesList.forEach {
-                    searchList.forEach { searchItem ->
-                        searchItem.isFavorite = favoritesList.any { it.id == searchItem.id }
-                    }
-                }
-                adapter.updateList(searchList)
-            }
+        moviesVM.messagesToDisplay.observe(this, Observer {
+            it?.let { showSnack(it) }
         })
+
+        //if we have a configuration change, keeps the recycler visible
+        moviesVM.lastSearchTerm.observe(this, Observer {
+            if (!it.isNullOrEmpty())
+                mainRecyclerMovies.show()
+        })
+
     }
 
     private fun setupEditTextBehavior() {

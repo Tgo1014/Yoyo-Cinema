@@ -41,12 +41,15 @@ class MoviesRepository(val dao: MoviesDao) : BaseRepository<Movie> {
             override fun onResponse(call: Call<SearchRequest>, response: Response<SearchRequest>) {
                 if (response.isSuccessful) {
                     if (response.body()?.results?.isEmpty() == true) {
+                        //unable to remove at moment because we need a context to get the string
+                        //no time to handle it right now ¯\_(ツ)_/¯
                         listener.onFailure("No more results")
                         return
                     }
-                    listener.onSucess(response.body()?.results!!)
+                    listener.onSuccess(response.body()?.results!!)
                     return
                 }
+                //the same as above
                 listener.onFailure("Unable to get results")
             }
         })
@@ -75,9 +78,8 @@ class MoviesRepository(val dao: MoviesDao) : BaseRepository<Movie> {
         favoriteId?.run {
             RestClient.moviesService.getMovieDetails(favoriteId).enqueue(object : Callback<Movie?> {
                 override fun onFailure(call: Call<Movie?>?, t: Throwable?) {
-                    //TODO implement a message when the request fails
+                    //Todo set a message when we fail to get a favorite
                 }
-
                 override fun onResponse(call: Call<Movie?>?, response: Response<Movie?>?) {
                     if (response?.isSuccessful == true) {
                         val m = response.body()

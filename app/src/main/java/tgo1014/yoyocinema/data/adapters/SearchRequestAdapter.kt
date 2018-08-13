@@ -28,7 +28,7 @@ class SearchRequestAdapter(var searchList: MutableList<SearchRequest.Result>,
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val item = searchList[holder.adapterPosition]
 
-        //shared transition
+        //set the movie id as a unique shared transition name
         ViewCompat.setTransitionName(holder.poster, item.id.toString())
 
         holder.name.text = item.title

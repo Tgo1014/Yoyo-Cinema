@@ -1,7 +1,9 @@
 package tgo1014.yoyocinema.helpers.extensions
 
+import android.content.Context
 import android.support.annotation.DrawableRes
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso

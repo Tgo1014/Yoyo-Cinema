@@ -27,9 +27,10 @@ class MovieDetailsActivity : BaseMovieActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_details)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportPostponeEnterTransition()
+        supportPostponeEnterTransition() //we need this to animate the transition
 
         movieId = intent.getIntExtra(EXTRA_MOVIE_ID, -1)
+        //verify if we got the needed movie id
         if (movieId == -1) {
             toast(getString(R.string.str_invalid_movieid))
             finish()
@@ -38,7 +39,7 @@ class MovieDetailsActivity : BaseMovieActivity() {
 
         val imageTransitionName = intent.getStringExtra(EXTRA_MOVIE_TRANSITION_NAME)
         detailActivityIvPoster.transitionName = imageTransitionName
-        supportStartPostponedEnterTransition()
+        supportStartPostponedEnterTransition() //start the transition animation
 
         handleViewModel()
     }
@@ -95,14 +96,17 @@ class MovieDetailsActivity : BaseMovieActivity() {
         fun startWithAnimation(activity: Activity, movieId: Int?, sharedImageView: View) {
             val intent = Intent(activity, MovieDetailsActivity::class.java)
             intent.putExtra(EXTRA_MOVIE_ID, movieId)
+            //set the transition name, so when the activity starts we can make the animation
             intent.putExtra(EXTRA_MOVIE_TRANSITION_NAME, ViewCompat.getTransitionName(sharedImageView))
 
-            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                    activity,
-                    sharedImageView,
-                    ViewCompat.getTransitionName(sharedImageView)!!)
+            val options = ViewCompat.getTransitionName(sharedImageView)?.let {
+                ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        activity,
+                        sharedImageView,
+                        it)
+            }
 
-            activity.startActivity(intent, options.toBundle())
+            activity.startActivity(intent, options?.toBundle())
         }
     }
 }

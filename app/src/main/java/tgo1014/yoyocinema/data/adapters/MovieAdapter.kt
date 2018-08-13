@@ -29,7 +29,7 @@ class MovieAdapter(var movieList: MutableList<Movie>,
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val item = movieList[holder.adapterPosition]
 
-        //shared transition
+        //set the movie id as a unique shared transition name
         ViewCompat.setTransitionName(holder.poster, item.id.toString())
 
         holder.name.text = item.title
@@ -39,6 +39,8 @@ class MovieAdapter(var movieList: MutableList<Movie>,
         holder.btnFavorite.setOnClickListener {
             favoriteListener.onClick(item.id)
         }
+
+        //Set as yellow if the movie is a favorite
         if (isFavoriteList)
             holder.btnFavorite.setIconTintResource(R.color.colorFavorite)
     }
