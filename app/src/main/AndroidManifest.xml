@@ -14,7 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="tgo1014.yoyocinema.ui.MainActivity">
+        <activity
+            android:name="tgo1014.yoyocinema.ui.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,9 +26,7 @@
         <activity
             android:name="tgo1014.yoyocinema.ui.MovieDetailsActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name="tgo1014.yoyocinema.ui.FavoritesActivity"
-            android:screenOrientation="portrait" />
+        <activity android:name="tgo1014.yoyocinema.ui.FavoritesActivity" />
     </application>
 
 </manifest>

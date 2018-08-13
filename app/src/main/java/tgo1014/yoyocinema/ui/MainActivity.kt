@@ -2,15 +2,11 @@ package tgo1014.yoyocinema.ui
 
 import android.arch.lifecycle.Observer
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.support.v7.app.ActionBar
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.Toolbar
 import android.view.KeyEvent
+import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import kotlinx.android.synthetic.main.activity_main.*
@@ -33,6 +29,7 @@ class MainActivity : BaseMovieActivity(), OnMovieItemClicked<SearchRequest.Resul
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setSupportActionBar(mainToolbar)
 
         configRecycler()
         setListeners()
@@ -72,6 +69,11 @@ class MainActivity : BaseMovieActivity(), OnMovieItemClicked<SearchRequest.Resul
         mainFabFavorites.setOnClickListener {
             startActivity(Intent(this, FavoritesActivity::class.java))
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        //to nothing, otherwise the popcorn icon will leave the app
+        return true
     }
 
     private fun handleViewModel() {
