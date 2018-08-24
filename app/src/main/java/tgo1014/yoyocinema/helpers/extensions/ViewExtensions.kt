@@ -6,6 +6,8 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.squareup.picasso.Picasso
 
 fun View.show(show: Boolean = true) {
@@ -28,13 +30,13 @@ fun TextView.toStr() = this.text.toString()
 
 fun ImageView.loadUrl(url: String?, @DrawableRes placeholder: Int? = null) {
     if (placeholder == null) {
-        Picasso.get()
+        Glide.with(context)
                 .load(url)
                 .into(this)
         return
     }
-    Picasso.get()
+    Glide.with(context)
+            .applyDefaultRequestOptions(RequestOptions().placeholder(placeholder))
             .load(url)
-            .placeholder(placeholder)
             .into(this)
 }
