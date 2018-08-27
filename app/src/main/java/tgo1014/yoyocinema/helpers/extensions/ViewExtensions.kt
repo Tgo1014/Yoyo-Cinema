@@ -1,14 +1,11 @@
 package tgo1014.yoyocinema.helpers.extensions
 
-import android.content.Context
 import android.support.annotation.DrawableRes
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.squareup.picasso.Picasso
 
 fun View.show(show: Boolean = true) {
     visibility = if (show) View.VISIBLE else View.GONE

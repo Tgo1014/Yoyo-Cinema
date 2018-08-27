@@ -2,7 +2,6 @@ package tgo1014.yoyocinema
 
 import android.app.Application
 import android.arch.persistence.room.Room
-import com.squareup.picasso.Picasso
 import tgo1014.yoyocinema.data.repositories.database.AppDatabase
 
 class App : Application() {
