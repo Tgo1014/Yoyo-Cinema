@@ -13,7 +13,7 @@ class MoviesRepository(private val remoteDataSource: RemoteDataSource,
         return remoteDataSource.searchMovies(searchTerm, page)
     }
 
-    override fun getFavorites(): List<Movie> {
+    override fun getFavorites(): Observable<List<Movie>> {
         return localDataSource.getFavoritesMovies()
     }
 

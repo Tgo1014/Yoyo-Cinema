@@ -6,7 +6,7 @@ import tgo1014.domain.model.SearchRequest
 
 interface MoviesRepository : BaseRepository<Movie> {
     fun search(searchTerm: String, page: Int): Observable<SearchRequest.Result>
-    fun getFavorites(): List<Movie>
+    fun getFavorites(): Observable<List<Movie>>
     fun getMovie(movieId: Int): Observable<Movie>
     fun getMovieAndSetAsFavorite(favoriteId: Int?)
 }
