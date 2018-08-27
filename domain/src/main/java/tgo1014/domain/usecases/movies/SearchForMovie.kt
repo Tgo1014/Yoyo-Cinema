@@ -8,9 +8,9 @@ import tgo1014.domain.usecases.ObservableUseCase
 
 class SearchForMovie(private val moviesRepository: MoviesRepository,
                      postExecutionThread: PostExecutionThread)
-    : ObservableUseCase<SearchRequest.Result, SearchForMovie.Params>(postExecutionThread) {
+    : ObservableUseCase<List<SearchRequest.Result>, SearchForMovie.Params>(postExecutionThread) {
 
-    override fun buildUseCase(params: Params?): Observable<SearchRequest.Result> {
+    override fun buildUseCase(params: Params?): Observable<List<SearchRequest.Result>> {
         if (params == null)
             throw IllegalArgumentException("You must inform the search query")
         return moviesRepository.search(params.searchQuery, params.page)
