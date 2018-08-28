@@ -16,9 +16,11 @@ class MoviesVM(private val searchMovies: SearchForMovie) : ViewModel() {
 
     fun searchMovie(searchTerm: String?) {
         if (searchTerm.isNullOrEmpty()) {
+            //todo create errors enums instead of hardcoding the error
             _state.postValue(Resource.error("To search, type at least one letter"))
             return
         }
+        _state.postValue(Resource.loading())
         searchMovies.execute(SearchForMovie.Params(searchTerm!!, page),
                 { result ->
                     val value = result.map { SearchRequestResultMapper.toPresentation(it) }
