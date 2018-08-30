@@ -1,30 +1,29 @@
-package tgo1014.yoyocinema.old.ui
+package tgo1014.yoyocinema.new.ui.activities
 
-import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.KeyEvent
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.activity_main.*
+import tgo1014.presentation.Resource
+import tgo1014.presentation.model.SearchRequestBinding
 import tgo1014.yoyocinema.R
-import tgo1014.yoyocinema.old.data.adapters.OnItemClickListener
-import tgo1014.yoyocinema.old.data.adapters.OnMovieItemClicked
-import tgo1014.yoyocinema.old.data.adapters.SearchRequestAdapter
-import tgo1014.yoyocinema.old.data.network.requests.SearchRequest
+import tgo1014.yoyocinema.new.ui.OnItemClickListener
+import tgo1014.yoyocinema.new.ui.OnMovieItemClicked
+import tgo1014.yoyocinema.new.ui.adapters.SearchRequestAdapter
 import tgo1014.yoyocinema.old.helpers.EndlessRecyclerViewScrollListener
-import tgo1014.yoyocinema.old.helpers.extensions.hideKeyboard
-import tgo1014.yoyocinema.old.helpers.extensions.show
-import tgo1014.yoyocinema.old.helpers.extensions.showSnack
-import tgo1014.yoyocinema.old.helpers.extensions.toStr
+import tgo1014.yoyocinema.old.helpers.extensions.*
 
-class MainActivity : BaseMovieActivity(), OnMovieItemClicked<SearchRequest.Result, View>, OnItemClickListener<Int?> {
+class MainActivity :
+        BaseMovieActivity(),
+        OnMovieItemClicked<SearchRequestBinding.ResultBinding, View>,
+        OnItemClickListener<Int?> {
 
     lateinit var adapter: SearchRequestAdapter
-    lateinit var layoutManager: LinearLayoutManager
+    lateinit var layoutManager: androidx.recyclerview.widget.LinearLayoutManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,25 +39,25 @@ class MainActivity : BaseMovieActivity(), OnMovieItemClicked<SearchRequest.Resul
 
     private fun configRecycler() {
         adapter = SearchRequestAdapter(arrayListOf(), this, this)
-        layoutManager = LinearLayoutManager(this)
+        layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
         mainRecyclerMovies.layoutManager = layoutManager
         mainRecyclerMovies.adapter = adapter
     }
 
     private fun search() {
         hideKeyboard()
-        moviesVM.search(mainEdtSearch.toStr())
+        moviesVM.searchMovie(mainEdtSearch.toStr())
     }
 
     private fun setListeners() {
         mainBtnSearch.setOnClickListener { search() }
         mainRecyclerMovies.addOnScrollListener(object : EndlessRecyclerViewScrollListener(layoutManager) {
-            override fun onLoadMore(totalItemsCount: Int, view: RecyclerView) {
-                moviesVM.loadNextPage()
+            override fun onLoadMore(totalItemsCount: Int, view: androidx.recyclerview.widget.RecyclerView) {
+                //moviesVM.loadNextPage()
             }
         })
-        mainRecyclerMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+        mainRecyclerMovies.addOnScrollListener(object : androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: androidx.recyclerview.widget.RecyclerView, dx: Int, dy: Int) {
                 //handle the scroll direction to show or hide the fab
                 when {
                     dy > 0 -> mainFabFavorites.hide()
@@ -77,24 +76,35 @@ class MainActivity : BaseMovieActivity(), OnMovieItemClicked<SearchRequest.Resul
     }
 
     private fun handleViewModel() {
-        moviesVM.observableSearchList.observe(this, Observer {
-            it?.let {
-                adapter.updateList(it)
-            }
-        })
+//        moviesVM.observableSearchList.observe(this, Observer {
+//            it?.let {
+//                adapter.updateList(it)
+//            }
+//        })
 
-        moviesVM.isLoading.observe(this, Observer {
-            it?.let { mainProgress.show(it) }
-        })
+//        moviesVM.isLoading.observe(this, Observer {
+//            it?.let { mainProgress.show(it) }
+//        })
 
-        moviesVM.messagesToDisplay.observe(this, Observer {
-            it?.let { showSnack(it) }
-        })
+//        moviesVM.messagesToDisplay.observe(this, Observer {
+//            it?.let { showSnack(it) }
+//        })
 
         //if we have a configuration change, keeps the recycler visible
-        moviesVM.lastSearchTerm.observe(this, Observer {
-            if (!it.isNullOrEmpty())
-                mainRecyclerMovies.show()
+//        moviesVM.lastSearchTerm.observe(this, Observer {
+//            if (!it.isNullOrEmpty())
+//                mainRecyclerMovies.show()
+//        })
+
+        moviesVM.state.observe(this, Observer {
+            when (it.status) {
+                Resource.RequestStatus.LOADING -> mainProgress.show()
+                Resource.RequestStatus.SUCCESS -> {
+                    mainProgress.gone()
+                    it.data?.let { adapter.updateList(it) }
+                }
+                Resource.RequestStatus.ERROR -> it.message?.let { showSnack(it) }
+            }
         })
 
     }
@@ -110,14 +120,14 @@ class MainActivity : BaseMovieActivity(), OnMovieItemClicked<SearchRequest.Resul
     }
 
     private fun onFavoriteClick(favoriteId: Int?) {
-        moviesVM.toggleFavorite(favoriteId)
+        //moviesVM.toggleFavorite(favoriteId)
     }
 
     override fun onClick(item: Int?) {
         onFavoriteClick(item)
     }
 
-    override fun onMovieIdClicked(item: SearchRequest.Result, view: View) {
+    override fun onMovieIdClicked(item: SearchRequestBinding.ResultBinding, view: View) {
         MovieDetailsActivity.startWithAnimation(this, item.id, view)
     }
 }

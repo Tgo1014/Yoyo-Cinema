@@ -1,5 +1,9 @@
 package tgo1014.yoyocinema.new.di
 
-val androidModule = module{
+import org.koin.dsl.module.module
+import tgo1014.domain.executor.PostExecutionThread
+import tgo1014.yoyocinema.new.ui.executor.UiThread
 
+val androidModule = module {
+    single { UiThread() as PostExecutionThread }
 }

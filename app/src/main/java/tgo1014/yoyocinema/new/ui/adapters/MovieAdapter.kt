@@ -1,25 +1,25 @@
-package tgo1014.yoyocinema.old.data.adapters
+package tgo1014.yoyocinema.new.ui.adapters
 
 
-import android.support.design.button.MaterialButton
-import android.support.v4.view.ViewCompat
-import android.support.v7.util.DiffUtil
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import tgo1014.yoyocinema.old.Constants
+import androidx.core.view.ViewCompat
+import androidx.recyclerview.widget.DiffUtil
+import tgo1014.presentation.model.MovieBinding
 import tgo1014.yoyocinema.R
-import tgo1014.yoyocinema.old.data.entities.Movie
+import tgo1014.yoyocinema.new.ui.OnItemClickListener
+import tgo1014.yoyocinema.new.ui.OnMovieItemClicked
+import tgo1014.yoyocinema.old.Constants
 import tgo1014.yoyocinema.old.helpers.extensions.loadUrl
 
-class MovieAdapter(var movieList: MutableList<Movie>,
-                   private val listener: OnMovieItemClicked<Movie, View>,
+class MovieAdapter(var movieList: MutableList<MovieBinding>,
+                   private val listener: OnMovieItemClicked<MovieBinding, View>,
                    private val favoriteListener: OnItemClickListener<Int?>,
                    private val isFavoriteList: Boolean = false)
-    : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+    : androidx.recyclerview.widget.RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder =
             MovieViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_movie, parent, false))
@@ -45,22 +45,22 @@ class MovieAdapter(var movieList: MutableList<Movie>,
             holder.btnFavorite.setIconTintResource(R.color.colorFavorite)
     }
 
-    fun updateList(list: List<Movie>) {
+    fun updateList(list: List<MovieBinding>) {
         val diff = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
             override fun areItemsTheSame(old: Int, new: Int) = movieList[old].id == list[new].id
             override fun getOldListSize() = movieList.size
             override fun getNewListSize() = list.size
             override fun areContentsTheSame(old: Int, new: Int) = movieList[old].id == list[new].id
-                    && movieList[old].isFavorite == list[new].isFavorite
+                   // && movieList[old].isFavorite == list[new].isFavorite
         })
         movieList = list.toMutableList()
         diff.dispatchUpdatesTo(this)
     }
 
-    inner class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class MovieViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
         val name: TextView = itemView.findViewById(R.id.itemMovieTxtTitle)
         val poster: ImageView = itemView.findViewById(R.id.itemMovieIvPoster)
         val background: ImageView = itemView.findViewById(R.id.itemMovieIvBackground)
-        val btnFavorite: MaterialButton = itemView.findViewById(R.id.itemMovieImgBtnFavorite)
+        val btnFavorite: com.google.android.material.button.MaterialButton = itemView.findViewById(R.id.itemMovieImgBtnFavorite)
     }
 }

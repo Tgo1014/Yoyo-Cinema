@@ -1,14 +1,14 @@
 package tgo1014.yoyocinema.old.helpers
 
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.StaggeredGridLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 
 /**
  * https://gist.github.com/nesquena/d09dc68ff07e845cc622
  */
-abstract class EndlessRecyclerViewScrollListener : RecyclerView.OnScrollListener {
+abstract class EndlessRecyclerViewScrollListener : androidx.recyclerview.widget.RecyclerView.OnScrollListener {
     // The minimum amount of items to have below your current scroll position
     // before loading more.
     private var visibleThreshold = 5
@@ -21,18 +21,18 @@ abstract class EndlessRecyclerViewScrollListener : RecyclerView.OnScrollListener
     // Sets the starting page index
     private val startingPageIndex = 0
 
-    internal var mLayoutManager: RecyclerView.LayoutManager
+    internal var mLayoutManager: androidx.recyclerview.widget.RecyclerView.LayoutManager
 
-    constructor(layoutManager: LinearLayoutManager) {
+    constructor(layoutManager: androidx.recyclerview.widget.LinearLayoutManager) {
         this.mLayoutManager = layoutManager
     }
 
-    constructor(layoutManager: GridLayoutManager) {
+    constructor(layoutManager: androidx.recyclerview.widget.GridLayoutManager) {
         this.mLayoutManager = layoutManager
         visibleThreshold *= layoutManager.spanCount
     }
 
-    constructor(layoutManager: StaggeredGridLayoutManager) {
+    constructor(layoutManager: androidx.recyclerview.widget.StaggeredGridLayoutManager) {
         this.mLayoutManager = layoutManager
         visibleThreshold *= layoutManager.spanCount
     }
@@ -52,18 +52,18 @@ abstract class EndlessRecyclerViewScrollListener : RecyclerView.OnScrollListener
     // This happens many times a second during a scroll, so be wary of the code you place here.
     // We are given a few useful parameters to help us work out if we need to load some more data,
     // but first we check if we are waiting for the previous load to finish.
-    override fun onScrolled(view: RecyclerView, dx: Int, dy: Int) {
+    override fun onScrolled(view: androidx.recyclerview.widget.RecyclerView, dx: Int, dy: Int) {
         var lastVisibleItemPosition = 0
         val totalItemCount = mLayoutManager.itemCount
 
         when (mLayoutManager) {
-            is StaggeredGridLayoutManager -> {
-                val lastVisibleItemPositions = (mLayoutManager as StaggeredGridLayoutManager).findLastVisibleItemPositions(null)
+            is androidx.recyclerview.widget.StaggeredGridLayoutManager -> {
+                val lastVisibleItemPositions = (mLayoutManager as androidx.recyclerview.widget.StaggeredGridLayoutManager).findLastVisibleItemPositions(null)
                 // get maximum element within the list
                 lastVisibleItemPosition = getLastVisibleItem(lastVisibleItemPositions)
             }
-            is GridLayoutManager -> lastVisibleItemPosition = (mLayoutManager as GridLayoutManager).findLastVisibleItemPosition()
-            is LinearLayoutManager -> lastVisibleItemPosition = (mLayoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+            is androidx.recyclerview.widget.GridLayoutManager -> lastVisibleItemPosition = (mLayoutManager as androidx.recyclerview.widget.GridLayoutManager).findLastVisibleItemPosition()
+            is androidx.recyclerview.widget.LinearLayoutManager -> lastVisibleItemPosition = (mLayoutManager as androidx.recyclerview.widget.LinearLayoutManager).findLastVisibleItemPosition()
         }
 
         // If the total item count is zero and the previous isn't, assume the
@@ -113,6 +113,6 @@ abstract class EndlessRecyclerViewScrollListener : RecyclerView.OnScrollListener
     }
 
     // Defines the process for actually loading more data based on page
-    abstract fun onLoadMore(totalItemsCount: Int, view: RecyclerView)
+    abstract fun onLoadMore(totalItemsCount: Int, view: androidx.recyclerview.widget.RecyclerView)
 
 }

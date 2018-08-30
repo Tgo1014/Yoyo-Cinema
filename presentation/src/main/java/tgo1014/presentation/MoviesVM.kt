@@ -1,8 +1,8 @@
 package tgo1014.presentation
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import tgo1014.domain.usecases.movies.SearchForMovie
 import tgo1014.presentation.mappers.SearchRequestResultMapper
 import tgo1014.presentation.model.SearchRequestBinding

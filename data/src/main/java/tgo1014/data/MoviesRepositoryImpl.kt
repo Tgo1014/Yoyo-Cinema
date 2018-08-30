@@ -5,11 +5,11 @@ import tgo1014.domain.model.Movie
 import tgo1014.domain.model.SearchRequest
 import tgo1014.domain.repositories.MoviesRepository
 
-class MoviesRepository(private val remoteDataSource: RemoteDataSource,
-                       private val localDataSource: LocalDataSource)
+class MoviesRepositoryImpl(private val remoteDataSource: RemoteDataSource,
+                           private val localDataSource: LocalDataSource)
     : MoviesRepository {
 
-    override fun search(searchTerm: String, page: Int): Observable<SearchRequest.Result> {
+    override fun search(searchTerm: String, page: Int): Observable<List<SearchRequest.Result>> {
         return remoteDataSource.searchMovies(searchTerm, page)
     }
 

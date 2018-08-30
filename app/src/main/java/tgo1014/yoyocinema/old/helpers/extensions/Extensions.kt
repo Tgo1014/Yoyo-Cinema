@@ -1,12 +1,12 @@
 package tgo1014.yoyocinema.old.helpers.extensions
 
 import android.app.Activity
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import android.content.Context
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
+import androidx.appcompat.app.AppCompatActivity
 import android.util.DisplayMetrics
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -40,8 +40,8 @@ fun Context.hideKeyboard(view: View) {
     inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
 }
 
-fun Activity.showSnack(text: String, lenght: Int = Snackbar.LENGTH_SHORT) {
-    Snackbar.make(findViewById(android.R.id.content), text, lenght).show()
+fun Activity.showSnack(text: String, lenght: Int = com.google.android.material.snackbar.Snackbar.LENGTH_SHORT) {
+    com.google.android.material.snackbar.Snackbar.make(findViewById(android.R.id.content), text, lenght).show()
 }
 
 infix fun Int.dpToPixel(context: Context): Int {

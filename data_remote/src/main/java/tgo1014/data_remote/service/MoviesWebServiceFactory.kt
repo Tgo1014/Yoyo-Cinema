@@ -8,8 +8,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object MoviesWebServiceFactory {
 
-    fun makeMovieWebService(auth: MoviesAuth, isDebug: Boolean) {
-        val okHttpClientn = makeOkHttpClient(auth, makeLogginInterceptor(isDebug))
+    fun makeMovieWebService(auth: MoviesAuth, isDebug: Boolean): MoviesService {
+        val okHttpClient = makeOkHttpClient(auth, makeLogginInterceptor(isDebug))
+        return makeMovieWebService(okHttpClient)
     }
 
     private fun makeMovieWebService(okHttpClient: OkHttpClient): MoviesService {

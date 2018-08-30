@@ -1,4 +1,4 @@
-package tgo1014.yoyocinema.old.data.adapters
+package tgo1014.yoyocinema.new.ui
 
 import android.view.View
 

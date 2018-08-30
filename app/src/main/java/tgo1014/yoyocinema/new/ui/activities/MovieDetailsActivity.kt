@@ -1,21 +1,18 @@
-package tgo1014.yoyocinema.old.ui
+package tgo1014.yoyocinema.new.ui.activities
 
 import android.app.Activity
-import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.ActivityOptionsCompat
-import android.support.v4.view.ViewCompat
 import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.view.View
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.view.ViewCompat
 import kotlinx.android.synthetic.main.activity_movie_details.*
-import tgo1014.yoyocinema.old.Constants
+import tgo1014.presentation.model.MovieBinding
 import tgo1014.yoyocinema.R
-import tgo1014.yoyocinema.old.data.entities.Movie
-import tgo1014.yoyocinema.old.data.network.RequestStatus
-import tgo1014.yoyocinema.old.helpers.extensions.gone
+import tgo1014.yoyocinema.old.Constants
 import tgo1014.yoyocinema.old.helpers.extensions.loadUrl
 import tgo1014.yoyocinema.old.helpers.extensions.toast
 
@@ -45,22 +42,22 @@ class MovieDetailsActivity : BaseMovieActivity() {
     }
 
     private fun handleViewModel() {
-        moviesVM.getMovie(movieId).observe(this, Observer {
-            when (it?.status) {
-                RequestStatus.LOADING -> Unit
-                RequestStatus.SUCCESS -> {
-                    fillMovieData(it.data)
-                    detailActivityProgress.gone()
-                }
-                RequestStatus.ERROR -> {
-                    toast(getString(R.string.str_unable_to_load_movie))
-                    detailActivityProgress.gone()
-                }
-            }
-        })
+//        moviesVM.getMovie(movieId).observe(this, Observer {
+//            when (it?.status) {
+//                RequestStatus.LOADING -> Unit
+//                RequestStatus.SUCCESS -> {
+//                    fillMovieData(it.data)
+//                    detailActivityProgress.gone()
+//                }
+//                RequestStatus.ERROR -> {
+//                    toast(getString(R.string.str_unable_to_load_movie))
+//                    detailActivityProgress.gone()
+//                }
+//            }
+//        })
     }
 
-    private fun fillMovieData(movie: Movie?) {
+    private fun fillMovieData(movie: MovieBinding?) {
         movie?.let {
             supportActionBar?.title = movie.title
 
