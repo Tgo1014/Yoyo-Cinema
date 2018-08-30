@@ -1,9 +1,8 @@
-package tgo1014.data_remote
+package tgo1014.data.remote
 
 import io.reactivex.Observable
 import tgo1014.data.RemoteDataSource
-import tgo1014.data_remote.mappers.SearchRequestResultsMapper
-import tgo1014.data_remote.service.MoviesService
+import tgo1014.data.remote.mappers.SearchRequestResultsMapper
 import tgo1014.domain.model.SearchRequest
 
 class MoviesRemoteDataSource(private val moviesService: MoviesService) : RemoteDataSource {

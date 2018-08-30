@@ -5,9 +5,9 @@ import tgo1014.data.LocalDataSource
 import tgo1014.data.MoviesRepositoryImpl
 import tgo1014.data.RemoteDataSource
 import tgo1014.data.local.MoviesLocalDataSource
-import tgo1014.data_remote.MoviesRemoteDataSource
-import tgo1014.data_remote.service.MoviesAuth
-import tgo1014.data_remote.service.MoviesWebServiceFactory
+import tgo1014.data.remote.MoviesAuth
+import tgo1014.data.remote.MoviesRemoteDataSource
+import tgo1014.data.remote.MoviesWebServiceFactory
 import tgo1014.domain.repositories.MoviesRepository
 import tgo1014.yoyocinema.BuildConfig
 import tgo1014.yoyocinema.new.ui.auth.MoviesAuthImpl

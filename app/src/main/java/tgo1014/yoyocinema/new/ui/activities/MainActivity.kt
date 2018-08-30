@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 import tgo1014.presentation.Resource
 import tgo1014.presentation.model.SearchRequestBinding
@@ -15,7 +16,10 @@ import tgo1014.yoyocinema.new.ui.OnItemClickListener
 import tgo1014.yoyocinema.new.ui.OnMovieItemClicked
 import tgo1014.yoyocinema.new.ui.adapters.SearchRequestAdapter
 import tgo1014.yoyocinema.old.helpers.EndlessRecyclerViewScrollListener
-import tgo1014.yoyocinema.old.helpers.extensions.*
+import tgo1014.yoyocinema.old.helpers.extensions.hideKeyboard
+import tgo1014.yoyocinema.old.helpers.extensions.show
+import tgo1014.yoyocinema.old.helpers.extensions.showSnack
+import tgo1014.yoyocinema.old.helpers.extensions.toStr
 
 class MainActivity :
         BaseMovieActivity(),
@@ -23,7 +27,7 @@ class MainActivity :
         OnItemClickListener<Int?> {
 
     lateinit var adapter: SearchRequestAdapter
-    lateinit var layoutManager: androidx.recyclerview.widget.LinearLayoutManager
+    lateinit var layoutManager: LinearLayoutManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,14 +50,14 @@ class MainActivity :
 
     private fun search() {
         hideKeyboard()
-        moviesVM.searchMovie(mainEdtSearch.toStr())
+        moviesVM.searchMovie(mainEdtSearch.toStr(), true)
     }
 
     private fun setListeners() {
         mainBtnSearch.setOnClickListener { search() }
         mainRecyclerMovies.addOnScrollListener(object : EndlessRecyclerViewScrollListener(layoutManager) {
             override fun onLoadMore(totalItemsCount: Int, view: androidx.recyclerview.widget.RecyclerView) {
-                //moviesVM.loadNextPage()
+                moviesVM.loadNextPage()
             }
         })
         mainRecyclerMovies.addOnScrollListener(object : androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
@@ -71,39 +75,32 @@ class MainActivity :
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        //to nothing, otherwise the popcorn icon will leave the app
+        //do nothing, otherwise the popcorn icon will leave the app
         return true
     }
 
     private fun handleViewModel() {
-//        moviesVM.observableSearchList.observe(this, Observer {
-//            it?.let {
-//                adapter.updateList(it)
-//            }
-//        })
 
-//        moviesVM.isLoading.observe(this, Observer {
-//            it?.let { mainProgress.show(it) }
-//        })
-
-//        moviesVM.messagesToDisplay.observe(this, Observer {
-//            it?.let { showSnack(it) }
-//        })
+        moviesVM.isLoading.observe(this, Observer {
+            it?.let { mainProgress.show(it) }
+        })
 
         //if we have a configuration change, keeps the recycler visible
-//        moviesVM.lastSearchTerm.observe(this, Observer {
-//            if (!it.isNullOrEmpty())
-//                mainRecyclerMovies.show()
-//        })
+        moviesVM.lastSearchTerm.observe(this, Observer {
+            if (!it.isNullOrEmpty())
+                mainRecyclerMovies.show()
+        })
 
         moviesVM.state.observe(this, Observer {
             when (it.status) {
                 Resource.RequestStatus.LOADING -> mainProgress.show()
                 Resource.RequestStatus.SUCCESS -> {
-                    mainProgress.gone()
                     it.data?.let { adapter.updateList(it) }
                 }
-                Resource.RequestStatus.ERROR -> it.message?.let { showSnack(it) }
+                Resource.RequestStatus.ERROR -> {
+                    it.data?.let { adapter.updateList(it) }
+                    it.message?.let { showSnack(it) }
+                }
             }
         })
 

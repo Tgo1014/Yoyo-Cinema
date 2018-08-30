@@ -1,6 +1,6 @@
-package tgo1014.data_remote.mappers
+package tgo1014.data.remote.mappers
 
-import tgo1014.data_remote.model.RemoteMovie
+import tgo1014.data.remote.model.RemoteMovie
 import tgo1014.domain.model.Movie
 
 object GenreMapper : Mapper<RemoteMovie.RemoteGenre, Movie.Genre> {

@@ -1,4 +1,4 @@
-package tgo1014.data_remote.service
+package tgo1014.data.remote
 
 interface MoviesAuth {
     fun getAccessToken(): String

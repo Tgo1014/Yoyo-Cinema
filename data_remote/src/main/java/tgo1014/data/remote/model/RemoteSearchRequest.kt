@@ -1,4 +1,4 @@
-package tgo1014.data_remote.model
+package tgo1014.data.remote.model
 
 import com.google.gson.annotations.SerializedName
 

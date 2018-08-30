@@ -1,4 +1,4 @@
-package tgo1014.data_remote.service
+package tgo1014.data.remote
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

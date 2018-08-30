@@ -1,6 +1,6 @@
-package tgo1014.data_remote.mappers
+package tgo1014.data.remote.mappers
 
-import tgo1014.data_remote.model.RemoteSearchRequest
+import tgo1014.data.remote.model.RemoteSearchRequest
 import tgo1014.domain.model.SearchRequest
 
 object SearchRequestResultsMapper : Mapper<RemoteSearchRequest.Result, SearchRequest.Result> {
