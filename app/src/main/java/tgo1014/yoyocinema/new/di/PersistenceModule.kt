@@ -6,7 +6,7 @@ import tgo1014.data.MoviesRepositoryImpl
 import tgo1014.data.RemoteDataSource
 import tgo1014.data.local.MoviesLocalDataSource
 import tgo1014.data.remote.MoviesAuth
-import tgo1014.data.remote.MoviesRemoteDataSource
+import tgo1014.data.remote.RemoteDataSourceImpl
 import tgo1014.data.remote.MoviesWebServiceFactory
 import tgo1014.domain.repositories.MoviesRepository
 import tgo1014.yoyocinema.BuildConfig
@@ -23,10 +23,10 @@ val persistenceModule = module {
         )
     }
     single {
-        MoviesLocalDataSource() as LocalDataSource
+        MoviesLocalDataSource(context = get()) as LocalDataSource
     }
     single {
-        MoviesRemoteDataSource(
+        RemoteDataSourceImpl(
                 moviesService = get()
         ) as RemoteDataSource
     }

@@ -8,9 +8,12 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import tgo1014.presentation.Resource
 import tgo1014.presentation.model.SearchRequestBinding
+import tgo1014.presentation.viewmodels.movies.MoviesSearchVM
 import tgo1014.yoyocinema.R
 import tgo1014.yoyocinema.new.ui.OnItemClickListener
 import tgo1014.yoyocinema.new.ui.OnMovieItemClicked
@@ -26,8 +29,9 @@ class MainActivity :
         OnMovieItemClicked<SearchRequestBinding.ResultBinding, View>,
         OnItemClickListener<Int?> {
 
-    lateinit var adapter: SearchRequestAdapter
+    private lateinit var adapter: SearchRequestAdapter
     lateinit var layoutManager: LinearLayoutManager
+    private val moviesSearchVM: MoviesSearchVM by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,18 +54,18 @@ class MainActivity :
 
     private fun search() {
         hideKeyboard()
-        moviesVM.searchMovie(mainEdtSearch.toStr(), true)
+        moviesSearchVM.searchMovie(mainEdtSearch.toStr(), true)
     }
 
     private fun setListeners() {
         mainBtnSearch.setOnClickListener { search() }
         mainRecyclerMovies.addOnScrollListener(object : EndlessRecyclerViewScrollListener(layoutManager) {
-            override fun onLoadMore(totalItemsCount: Int, view: androidx.recyclerview.widget.RecyclerView) {
-                moviesVM.loadNextPage()
+            override fun onLoadMore(totalItemsCount: Int, view: RecyclerView) {
+                moviesSearchVM.loadNextPage()
             }
         })
-        mainRecyclerMovies.addOnScrollListener(object : androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: androidx.recyclerview.widget.RecyclerView, dx: Int, dy: Int) {
+        mainRecyclerMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 //handle the scroll direction to show or hide the fab
                 when {
                     dy > 0 -> mainFabFavorites.hide()
@@ -81,17 +85,17 @@ class MainActivity :
 
     private fun handleViewModel() {
 
-        moviesVM.isLoading.observe(this, Observer {
+        moviesSearchVM.isLoading.observe(this, Observer {
             it?.let { mainProgress.show(it) }
         })
 
         //if we have a configuration change, keeps the recycler visible
-        moviesVM.lastSearchTerm.observe(this, Observer {
+        moviesSearchVM.lastSearchTerm.observe(this, Observer {
             if (!it.isNullOrEmpty())
                 mainRecyclerMovies.show()
         })
 
-        moviesVM.state.observe(this, Observer {
+        moviesSearchVM.state.observe(this, Observer {
             when (it.status) {
                 Resource.RequestStatus.LOADING -> mainProgress.show()
                 Resource.RequestStatus.SUCCESS -> {
@@ -117,7 +121,7 @@ class MainActivity :
     }
 
     private fun onFavoriteClick(favoriteId: Int?) {
-        //moviesVM.toggleFavorite(favoriteId)
+        //moviesSearchVM.toggleFavorite(favoriteId)
     }
 
     override fun onClick(item: Int?) {

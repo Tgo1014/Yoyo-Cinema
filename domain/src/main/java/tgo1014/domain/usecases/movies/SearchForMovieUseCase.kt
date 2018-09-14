@@ -6,9 +6,9 @@ import tgo1014.domain.model.SearchRequest
 import tgo1014.domain.repositories.MoviesRepository
 import tgo1014.domain.usecases.ObservableUseCase
 
-class SearchForMovie(private val moviesRepository: MoviesRepository,
-                     postExecutionThread: PostExecutionThread)
-    : ObservableUseCase<List<SearchRequest.Result>, SearchForMovie.Params>(postExecutionThread) {
+class SearchForMovieUseCase(private val moviesRepository: MoviesRepository,
+                            postExecutionThread: PostExecutionThread)
+    : ObservableUseCase<List<SearchRequest.Result>, SearchForMovieUseCase.Params>(postExecutionThread) {
 
     override fun buildUseCase(params: Params?): Observable<List<SearchRequest.Result>> {
         if (params == null)

@@ -11,7 +11,7 @@ import tgo1014.data.remote.model.RemoteSearchRequest
 interface MoviesService {
 
     @GET("movie/{movie_id}")
-    fun getMovieDetails(@Path("movie_id") movie_id: Int): Call<RemoteMovie>
+    fun getMovieDetails(@Path("movie_id") movie_id: Int): Observable<RemoteMovie>
 
     @GET("search/movie")
     fun search(@Query("query") searchQuery: String,

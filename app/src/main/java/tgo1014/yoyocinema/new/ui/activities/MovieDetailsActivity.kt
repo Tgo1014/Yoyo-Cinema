@@ -9,16 +9,24 @@ import android.text.method.LinkMovementMethod
 import android.view.View
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
+import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.activity_movie_details.*
-import tgo1014.presentation.model.MovieBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import tgo1014.domain.model.Movie
+import tgo1014.presentation.Resource
+import tgo1014.presentation.viewmodels.movies.MovieByIdVM
 import tgo1014.yoyocinema.R
 import tgo1014.yoyocinema.old.Constants
+import tgo1014.yoyocinema.old.data.network.RequestStatus
+import tgo1014.yoyocinema.old.helpers.extensions.gone
 import tgo1014.yoyocinema.old.helpers.extensions.loadUrl
+import tgo1014.yoyocinema.old.helpers.extensions.show
 import tgo1014.yoyocinema.old.helpers.extensions.toast
 
 class MovieDetailsActivity : BaseMovieActivity() {
 
     private var movieId: Int = -1
+    private val moviesVM: MovieByIdVM by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,22 +50,24 @@ class MovieDetailsActivity : BaseMovieActivity() {
     }
 
     private fun handleViewModel() {
-//        moviesVM.getMovie(movieId).observe(this, Observer {
-//            when (it?.status) {
-//                RequestStatus.LOADING -> Unit
-//                RequestStatus.SUCCESS -> {
-//                    fillMovieData(it.data)
-//                    detailActivityProgress.gone()
-//                }
-//                RequestStatus.ERROR -> {
-//                    toast(getString(R.string.str_unable_to_load_movie))
-//                    detailActivityProgress.gone()
-//                }
-//            }
-//        })
+        moviesVM.getMoviesById(movieId)
+        moviesVM.isLoading.observe(this, Observer {
+            detailActivityProgress.show(it)
+        })
+        moviesVM.state.observe(this, Observer {
+            when (it.status) {
+                Resource.RequestStatus.LOADING -> Unit
+                RequestStatus.SUCCESS -> {
+                    fillMovieData(it.data)
+                }
+                RequestStatus.ERROR -> {
+                    toast(getString(R.string.str_unable_to_load_movie))
+                }
+            }
+        })
     }
 
-    private fun fillMovieData(movie: MovieBinding?) {
+    private fun fillMovieData(movie: Movie?) {
         movie?.let {
             supportActionBar?.title = movie.title
 

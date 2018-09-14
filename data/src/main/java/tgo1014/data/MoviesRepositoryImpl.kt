@@ -18,7 +18,7 @@ class MoviesRepositoryImpl(private val remoteDataSource: RemoteDataSource,
     }
 
     override fun getMovie(movieId: Int): Observable<Movie> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return remoteDataSource.getMovieById(movieId)
     }
 
     override fun getMovieAndSetAsFavorite(favoriteId: Int?) {

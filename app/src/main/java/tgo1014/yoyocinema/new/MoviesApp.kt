@@ -8,8 +8,15 @@ import tgo1014.yoyocinema.new.di.persistenceModule
 import tgo1014.yoyocinema.new.di.presentationModule
 
 class MoviesApp : Application() {
+
     override fun onCreate() {
         super.onCreate()
-        startKoin(this, listOf(androidModule, domainModule, persistenceModule, presentationModule))
+        startKoin(this,
+                listOf(androidModule,
+                        domainModule,
+                        persistenceModule,
+                        presentationModule)
+        )
     }
+
 }

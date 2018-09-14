@@ -1,26 +1,21 @@
-package tgo1014.presentation
+package tgo1014.presentation.viewmodels.movies
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import tgo1014.domain.usecases.movies.SearchForMovie
+import tgo1014.domain.usecases.movies.SearchForMovieUseCase
+import tgo1014.presentation.Resource
 import tgo1014.presentation.mappers.SearchRequestResultMapper
 import tgo1014.presentation.model.SearchRequestBinding
+import tgo1014.presentation.viewmodels.BaseViewModel
 
-class MoviesVM(private val searchMovies: SearchForMovie) : ViewModel() {
+class MoviesSearchVM(private val searchMoviesUseCase: SearchForMovieUseCase) : BaseViewModel<List<SearchRequestBinding.ResultBinding>>() {
 
     private var page = 1
     private var lastPageReached = false
     private var moviesList: MutableList<SearchRequestBinding.ResultBinding> = arrayListOf()
 
-    private val _state: MutableLiveData<Resource<List<SearchRequestBinding.ResultBinding>>> = MutableLiveData()
-    val state = _state as LiveData<Resource<List<SearchRequestBinding.ResultBinding>>>
-
     var lastSearchTerm = MutableLiveData<String>()
-    var isLoading = MutableLiveData<Boolean>()
 
     init {
-        isLoading.value = false
         lastSearchTerm.value = ""
     }
 
@@ -37,7 +32,7 @@ class MoviesVM(private val searchMovies: SearchForMovie) : ViewModel() {
         if (newSearch)
             reset()
 
-        searchMovies.execute(SearchForMovie.Params(searchTerm!!, page),
+        searchMoviesUseCase?.execute(SearchForMovieUseCase.Params(searchTerm!!, page),
                 { result ->
                     val resultMovies = result.map { SearchRequestResultMapper.toPresentation(it) }
 
@@ -78,6 +73,7 @@ class MoviesVM(private val searchMovies: SearchForMovie) : ViewModel() {
         }
     }
 
+
 //    private fun setSeachRequestFavorites(data: MutableList<SearchRequest.Result>): MutableList<SearchRequest.Result> {
 //        val favorites = getFavoritesSync()
 //        favorites.forEach {
@@ -104,7 +100,7 @@ class MoviesVM(private val searchMovies: SearchForMovie) : ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
-        searchMovies.dispose()
+        searchMoviesUseCase.dispose()
     }
 
 }
