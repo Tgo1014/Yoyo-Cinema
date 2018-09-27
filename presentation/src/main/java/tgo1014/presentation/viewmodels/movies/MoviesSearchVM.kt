@@ -32,7 +32,7 @@ class MoviesSearchVM(private val searchMoviesUseCase: SearchForMovieUseCase) : B
         if (newSearch)
             reset()
 
-        searchMoviesUseCase?.execute(SearchForMovieUseCase.Params(searchTerm!!, page),
+        searchMoviesUseCase.execute(SearchForMovieUseCase.Params(searchTerm!!, page),
                 { result ->
                     val resultMovies = result.map { SearchRequestResultMapper.toPresentation(it) }
 
@@ -72,31 +72,6 @@ class MoviesSearchVM(private val searchMoviesUseCase: SearchForMovieUseCase) : B
             searchMovie(lastSearchTerm.value)
         }
     }
-
-
-//    private fun setSeachRequestFavorites(data: MutableList<SearchRequest.Result>): MutableList<SearchRequest.Result> {
-//        val favorites = getFavoritesSync()
-//        favorites.forEach {
-//            data.forEach { searchItem ->
-//                searchItem.isFavorite = favorites.any { it.id == searchItem.id }
-//            }
-//        }
-//        return data
-//    }
-
-//    fun toggleFavorite(movieId: Int?) {
-//        if (movieId == null) return
-//        //if it's already a favorite, remove it
-//        if (repository.getFavoritesSync().map { it.id }.contains(movieId)) {
-//            val movie = repository.getMovieSync(movieId)
-//            movie?.let {
-//                repository.delete(movie)
-//            }
-//            return
-//        }
-//        //else get music and set as a favorite
-//        repository.getMovieAndSetAsFavorite(movieId)
-//    }
 
     override fun onCleared() {
         super.onCleared()

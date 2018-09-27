@@ -20,6 +20,7 @@ data class SearchRequestBinding(
             val backdropPath: String?,
             val adult: Boolean?,
             val overview: String?,
-            val releaseDate: String?
+            val releaseDate: String?,
+            val favorite: Boolean = false
     )
 }

@@ -53,61 +53,6 @@ dependencies {
     testImplementation "org.koin:koin-test:$koin_version"
     androidTestImplementation "org.koin:koin-test:$koin_version"
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //old dependecies TODO remove
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation "androidx.appcompat:appcompat:$support_lib_version"
-    implementation "androidx.recyclerview:recyclerview:$support_lib_version"
-    implementation "androidx.annotation:annotation:$support_lib_version"
-    implementation "com.google.android.material:material:$support_lib_version"
-    implementation "androidx.cardview:cardview:$support_lib_version"
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
-
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
-
-    //Room
-    implementation "androidx.room:room-runtime:$archcomp_version"
-    kapt "androidx.room:room-compiler:$archcomp_version"
-
-    // ViewModel and LiveData
-    implementation "androidx.lifecycle:lifecycle-extensions:$archcomp_version"
-    kapt "androidx.lifecycle:lifecycle-compiler:$archcomp_version"
-
-    //Gson
-    implementation 'com.google.code.gson:gson:2.8.5'
-
-    //coroutines
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.24.0'
-
-    //Retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
-
-    //Glide
-    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    debugImplementation 'com.facebook.stetho:stetho:1.5.0'
 
 }

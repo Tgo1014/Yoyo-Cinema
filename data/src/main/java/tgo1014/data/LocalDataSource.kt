@@ -7,6 +7,6 @@ import tgo1014.domain.model.Movie
 interface LocalDataSource {
     fun getFavoritesMovies(): Observable<List<Movie>>
     fun getMovieById(movieId: Int): Observable<Movie>
-    fun favoriteMovie(): Completable
-    fun unfavoriteMovie(): Completable
+    fun favoriteMovie(movie: Movie): Completable
+    fun unfavoriteMovie(movieId: Int): Completable
 }

@@ -9,6 +9,15 @@ import tgo1014.domain.model.Movie
  * This class is used just for graph test purposes in the PersistenceTestModule.kt
  */
 class MoviesLocalDataTestSource : LocalDataSource {
+
+    override fun unfavoriteMovie(movieId: Int): Completable {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun favoriteMovie(movie: Movie): Completable {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun getFavoritesMovies(): Observable<List<Movie>> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -17,11 +26,4 @@ class MoviesLocalDataTestSource : LocalDataSource {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun favoriteMovie(): Completable {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun unfavoriteMovie(): Completable {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 }

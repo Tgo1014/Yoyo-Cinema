@@ -4,6 +4,7 @@ import tgo1014.domain.model.SearchRequest
 import tgo1014.presentation.model.SearchRequestBinding
 
 object SearchRequestResultMapper : Mapper<SearchRequest.Result, SearchRequestBinding.ResultBinding> {
+
     override fun toPresentation(domain: SearchRequest.Result): SearchRequestBinding.ResultBinding {
         return SearchRequestBinding.ResultBinding(
                 domain.voteCount,
@@ -41,4 +42,5 @@ object SearchRequestResultMapper : Mapper<SearchRequest.Result, SearchRequestBin
                 presentation.releaseDate
         )
     }
+
 }
